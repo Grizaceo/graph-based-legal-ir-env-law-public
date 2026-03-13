@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-label="Public demo placeholder">
+  <rect width="1200" height="520" fill="#ffffff"/>
+  <rect x="120" y="100" width="960" height="320" rx="10" fill="#f9fafb" stroke="#d1d5db"/>
+  <text x="600" y="210" font-family="Arial, Helvetica, sans-serif" font-size="38" text-anchor="middle" fill="#1f2937" font-weight="700">Public Demo</text>
+  <text x="600" y="265" font-family="Arial, Helvetica, sans-serif" font-size="28" text-anchor="middle" fill="#0f4c81">Coming Later</text>
+  <text x="600" y="320" font-family="Arial, Helvetica, sans-serif" font-size="20" text-anchor="middle" fill="#4b5563">This repository currently provides documentation and architecture context.</text>
+</svg>
