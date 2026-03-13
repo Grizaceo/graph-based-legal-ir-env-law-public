@@ -103,6 +103,6 @@ The demo will be released only after core evidence, review, and answer-path cont
 
 ## Contact
 
-- GitHub: `[your-github-profile-or-org]`
-- LinkedIn: `[your-linkedin-url]`
-- Email: `[your-email]`
+- GitHub: https://github.com/Grizaceo
+- LinkedIn: https://www.linkedin.com/in/cristobal-munoz-derecho/
+- Email: cristobal.munoz@derecho.uchile.cl
