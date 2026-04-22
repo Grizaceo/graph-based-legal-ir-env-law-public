@@ -3,67 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexCon Ecosystem | Legal IR Architecture</title>
+    <title>LexCon | Legal Knowledge Graph</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="badge">Legal Tech Ecosystem</div>
-            <h1>LexCon Infrastructure</h1>
-            <p class="description">Construyendo el futuro de la inteligencia jurídica chilena mediante grafos de conocimiento validados y razonamiento agéntico.</p>
+            <div class="badge">LexO Standard • LKG Design</div>
+            <h1>LexCon Systems</h1>
+            <p class="description">Infraestructura de grafos para el ordenamiento jurídico chileno. Operado mediante LexO, un motor de razonamiento basado estrictamente en fuentes oficiales y evidencia canónica.</p>
         </header>
 
         <main>
-            <section>
-                <div class="process-diagram">
-                    <div class="process-node">
-                        <div class="node-icon">📥</div>
-                        <h3>Ingesta</h3>
-                        <p>Scraping masivo de PJUD y DT. Limpieza y preparación de datos crudos.</p>
-                    </div>
-                    <div class="process-node">
-                        <div class="node-icon">🧠</div>
-                        <h3>IndexO</h3>
-                        <p>Búsqueda semántica usando BETO (Embeddings de 768 dimensiones).</p>
-                    </div>
-                    <div class="process-node">
-                        <div class="node-icon">⚖️</div>
-                        <h3>Validación</h3>
-                        <p>Filtrado humano sobre el Review Graph para asegurar veracidad canónica.</p>
-                    </div>
-                    <div class="process-node">
-                        <div class="node-icon">🤖</div>
-                        <h3>Agentes</h3>
-                        <p>LexO-Alpha orquesta la resolución de casos usando el grafo validado.</p>
-                    </div>
+            <section class="pipeline">
+                <div class="node">
+                    <h3>01. SOURCES</h3>
+                    <p>Ingesta automatizada de fuentes oficiales (PJUD, DT, SUSESO).</p>
+                </div>
+                <div class="node">
+                    <h3>02. INDEXO</h3>
+                    <p>Recuperación semántica profunda basada en embeddings legales.</p>
+                </div>
+                <div class="node">
+                    <h3>03. REVIEW</h3>
+                    <p>Validación humana de relaciones para la construcción del grafo.</p>
+                </div>
+                <div class="node">
+                    <h3>04. LEXO</h3>
+                    <p>Razonamiento sobre grafo validado con control de evidencia.</p>
                 </div>
             </section>
 
             <div class="grid">
                 <div class="card">
-                    <h2>⚙️ Capas de Sistema</h2>
-                    <p>Una arquitectura modular de 7 niveles (0-6) que separa la adquisición, la confianza y la aplicación del conocimiento jurídico.</p>
+                    <h2>Fail-closed Logic</h2>
+                    <p>Arquitectura diseñada para abstenerse o reportar falta de información ante la ausencia de evidencia canónica, eliminando riesgos de invención.</p>
                 </div>
                 <div class="card">
-                    <h2>🛡️ Zero Hallucination</h2>
-                    <p>El uso de un Grafo Canónico (LKG) garantiza que cada respuesta del agente tenga evidencia verificable por hash en una fuente oficial.</p>
+                    <h2>Especialización Piloto</h2>
+                    <p>Actualmente expandiendo la cobertura del grafo con enfoque prioritario en los dominios Laboral y Ambiental por su alta complejidad normativa.</p>
                 </div>
                 <div class="card">
-                    <h2>📍 Especialización</h2>
-                    <p>Verticales profundas en Derecho Ambiental y Laboral, optimizadas para la complejidad normativa chilena actual.</p>
+                    <h2>Modularidad Legal</h2>
+                    <p>Separación estricta entre la adquisición del dato crudo y la capa de razonamiento para asegurar la auditabilidad del proceso.</p>
                 </div>
-            </div>
 
-            <div class="links">
-                <a href="docs/architecture.md" class="btn btn-primary">Arquitectura</a>
-                <a href="docs/ecosystem.md" class="btn btn-secondary">Las 7 Capas</a>
-                <a href="docs/roadmap.md" class="btn btn-secondary">Roadmap 2026</a>
+                <div class="doc-links">
+                    <a href="docs/architecture.md" class="doc-btn">Arquitectura del Sistema</a>
+                    <a href="docs/ecosystem.md" class="doc-btn doc-btn-alt">Las 7 Capas</a>
+                    <a href="docs/roadmap.md" class="doc-btn doc-btn-alt">Roadmap de Desarrollo</a>
+                    <a href="docs/domains.md" class="doc-btn doc-btn-alt">Detalle de Dominios</a>
+                </div>
             </div>
         </main>
 
-        <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid #111; color: #444; font-size: 12px;">
-            LexCon Legal Knowledge Graph &bull; LexO Standard &bull; Santiago, Chile
+        <footer style="margin-top: 100px; color: #444; font-size: 13px;">
+            LexCon LKG Framework &bull; Santiago, Chile &bull; 2026
         </footer>
     </div>
 </body>
