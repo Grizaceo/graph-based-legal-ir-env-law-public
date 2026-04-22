@@ -34,13 +34,13 @@ body {
 
 /* Typography */
 h1 {
-  font-size: clamp(3.5rem, 9vw, 5rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.5rem, 6vw, 3.8rem); /* Reducido de 5rem para mayor elegancia */
+  font-weight: 600; /* Bajado de 700 a 600 */
+  letter-spacing: -0.03em; /* Menos agresivo */
   line-height: 1.1;
-  margin-bottom: 24px;
-  color: var(--text-primary); /* Pasamos a color sólido para máxima legibilidad */
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  text-shadow: none; /* Eliminamos el brillo para que sea más plano y sobrio */
 }
 
 h2 {
@@ -51,11 +51,11 @@ h2 {
 }
 
 .lead {
-  font-size: 1.25rem;
+  font-size: 1.15rem; /* Un poco más pequeño */
   color: var(--text-tertiary);
-  max-width: 800px;
+  max-width: 750px;
   margin-bottom: 32px;
-  text-align: justify;
+  text-align: left; /* Volvemos a alineación a la izquierda, es más elegante técnica */
   line-height: 1.6;
 }
 
