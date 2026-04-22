@@ -4,46 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LexCon | Legal Knowledge Graph</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <style>
         .branding-logo {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
+            gap: 8px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
         }
         .logo-svg {
             vertical-align: middle;
-            margin-top: -2px;
-            filter: drop-shadow(0 0 8px rgba(94, 106, 210, 0.4));
+            filter: drop-shadow(0 0 12px rgba(94, 106, 210, 0.6));
         }
         .badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             background: rgba(94, 106, 210, 0.1);
             color: var(--accent-glow);
-            padding: 6px 16px;
+            padding: 12px 24px;
             border-radius: 9999px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid rgba(94, 106, 210, 0.3);
-            margin-bottom: 32px;
+            font-size: 24px;
+            font-weight: 600;
+            border: 1px solid rgba(94, 106, 210, 0.4);
+            margin-bottom: 48px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         .node h3 {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 1.4rem;
+            gap: 10px;
+            font-size: 1.5rem;
         }
         .node.special h3 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             color: var(--text-primary);
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+        .node.special p {
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -51,11 +58,11 @@
     <div class="layout">
         <header>
             <div class="badge">
-                LEX<svg class="logo-svg" width="20" height="20" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.4"/>
-                    <circle cx="22" cy="22" r="6" fill="#5e6ad2"/>
-                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2.5" stroke-linecap="round"/>
-                </svg> CORE ECOSYSTEM
+                LEX<svg class="logo-svg" width="40" height="40" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
+                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
+                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
+                </svg> CORE
             </div>
             <h1>The Legal Knowledge <br>Graph for Chile.</h1>
             <p class="lead">Infraestructura agéntica diseñada para mapear la complejidad del derecho chileno mediante grafos de conocimiento validados, garantizando respuestas con trazabilidad absoluta y diseño Fail-Closed.</p>
@@ -79,10 +86,10 @@
             </div>
             <div class="node special">
                 <span class="node-label">OUTPUT</span>
-                <h3>LEX<svg class="logo-svg" width="32" height="32" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
-                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
-                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
+                <h3>LEX<svg class="logo-svg" width="64" height="64" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.6"/>
+                    <circle cx="22" cy="22" r="8" fill="#5e6ad2"/>
+                    <path d="M22 17V2M22 27V42M17 22H2M27 22H42" stroke="#7170ff" stroke-width="3.5" stroke-linecap="round"/>
                 </svg></h3>
                 <p>Razonamiento jurídico asistido que solo opera sobre evidencia verificada por hash.</p>
             </div>
