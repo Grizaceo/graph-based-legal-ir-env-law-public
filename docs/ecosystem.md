@@ -1,102 +1,38 @@
-# Ecosystem
+# 🌐 The LexCon Ecosystem
 
-## Overview
+The LexCon Ecosystem is a decentralized set of tools designed to solve the "Trust Gap" in legal AI. By separating data acquisition, validation, and reasoning into clear layers, we ensure that every response is grounded in verifiable Chilean Law.
 
-The project has evolved from a single-domain IR system into a **layered legal technology ecosystem**. Each layer is independently useful but gains power when connected.
+---
 
-## Layer Architecture
+## 🛠️ Component Breakdown
 
-```
-Layer 0: Scrapers          → Raw data acquisition
-Layer 1: IndexO            → Retrieval and ranking
-Layer 2: Legal Reviewer    → Human validation
-Layer 3: Review Graph      → Pending relations
-Layer 4: Graph-Legal-IR    → Canonical legal graph
-Layer 5: LexO-Alpha        → Legal reasoning agent
-Layer 6: Applications      → End-user products
-```
+### 📂 Layer 0-1: Data & Retrieval
+- **n8n-judicial**: A set of automated workflows that monitor the PJUD, DT, and SUSESO portals.
+- **IndexO**: A high-performance retrieval engine. It handles tokenization, embedding generation (768 dimensions), and similarity search across the ~3,500 document vault.
 
-## Layer Details
+### 👥 Layer 2-3: The Trust Layers
+- **Legal Reviewer**: A web interface for lawyers to label documents and validate extracted relations.
+- **Review Graph**: This layer maintains the "Suggested" vs "Canonical" distinction. It handles the lifecycle of knowledge (DRAFT → FROZEN → APPROVED).
 
-### Layer 0: Scrapers
+### 🤖 Layer 4-5: Reasoning Intelligence
+- **LexO-Alpha**: The orchestrator agent. It decomposes legal queries into research tasks and coordinates subagents.
+- **Subagent Fleet**: 9 specialized personas (Researcher, Procurador, Judge, Case Designer, etc.) each with its own focus and logic.
 
-Data acquisition from Chilean legal sources:
+### 📱 Layer 6: End-User Applications
+- **Lexito**: Simplified assistant for citizens to understand their rights in labor or environmental conflicts.
+- **Procurador-digital**: A dedicated tool for managing procedural deadlines (plazos) based on the CPC and specialized laws.
+- **Case Writer**: An LLM-powered editor that helps draft legal documents using the evidence from the LKG.
 
-| Source | Type | Status |
-|--------|------|--------|
-| PJUD (sentencias) | Judicial decisions | Operational |
-| DT (fiscalizaciones) | Labor inspections | Operational |
-| SUSESO | Social security rulings | Operational |
-| Academia Judicial | Judicial training | Operational |
-| LeyChile | Normative (via BCN) | Operational |
+---
 
-### Layer 1: IndexO
+## 🏔️ Strategy: Domain-by-Domain
+Instead of a "Horizontal" approach (trying to know all law at once), LexCon follows a **Vertical "Deep Dive" Strategy**:
 
-Retrieval infrastructure:
-- **BETO fine-tuned encoder** trained on Chilean legal QA
-- Semantic search over ~3,000 documents in vault
-- Domain-specific ranking for labor and environmental law
-- Goldset evaluation with MRR@10 metrics
+1.  **Labor Law**: Focused on the nuances of Tutela and Despido.
+2.  **Environmental Law**: Focused on Administrative Law and SEA resolutions.
+3.  **Procedural Law**: Focused on civil and labor procedure deadlines.
 
-### Layer 2: Legal Reviewer
+---
 
-Human curation layer:
-- Two review windows (deep review, quick triage)
-- Label taxonomy for document classification
-- Goldset construction for evaluation
-- Quality control for downstream graph
-
-### Layer 3: Review Graph
-
-Intermediate relations layer:
-- Machine-suggested relations pending review
-- State machine: PENDING → APPROVED → REJECTED → EXPIRED
-- Prevents zombie edges from accumulating
-- Bridge between extraction and canonical graph
-
-### Layer 4: Graph-Legal-IR
-
-Canonical legal graph:
-- Hash-verified evidence for each relation
-- Only reviewed, approved relations enter
-- Temporal metadata (when relation applies)
-- Designed for legal reasoning transparency
-
-### Layer 5: LexO-Alpha
-
-Legal reasoning agent:
-- Operates over graph + vault
-- Generates Normative Interaction Frames
-- 9 specialized subagents (researcher, judge, writer, etc.)
-- Telegram gateway for direct interaction
-
-### Layer 6: Applications
-
-End-user products:
-
-| Product | Purpose | Status |
-|---------|---------|--------|
-| Procurador-digital | Procedural deadline calculator | MVP (labor), in dev (executive) |
-| Lexito | Citizen-facing legal assistant | Concept |
-| lexo-case-writer | Legal document drafting | Concept |
-| lexo-simulated-trial | Training environment | Concept |
-
-## Key Repositories
-
-| Repo | Layer | Visibility |
-|------|-------|------------|
-| n8n-judicial | 0 | Private |
-| indexo-retriever-prod | 1 | Private |
-| legal-ecosystem | 2-3 | Private |
-| graph-legal-ir (core) | 4 | Private |
-| lexo-research-lab | 5 | Private |
-| procurar-digital | 6 | Private |
-| graph-based-legal-ir-env-law-public | Docs | Public |
-
-## Design Principles
-
-1. **No raw model output → canonical graph.** Everything reviewed.
-2. **Fail-closed by default.** Insufficient evidence = abstain.
-3. **Temporal awareness.** Legal relations exist in time.
-4. **Separation of concerns.** Each layer does one thing well.
-5. **Auditability.** Every claim traceable to source.
+## 📈 Scalability
+The ecosystem is designed to be **provider-agnostic**. While we currently use specialized models like GPT-4o, Claude 3.5, and fine-tuned BETOs, the architecture allows for swapping layers or models as technology evolves without losing the underlying validated knowledge graph.

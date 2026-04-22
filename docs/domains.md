@@ -1,76 +1,40 @@
-# Domains
+# 🎯 Strategic Domains
 
-## Domain Strategy
+LexCon does not aim to be a general-purpose search engine. Our goal is to provide **high-precision legal reasoning** in specific fields where ambiguity has high stakes.
 
-We started with **focused, bounded domains** to validate methodology before attempting broad coverage. Each domain proves the pipeline works end-to-end on a tractable problem.
+---
 
-## Current Domains
+## 🌳 Environmental Law (Derecho Ambiental)
+We map the intersection between normative requirements and administrative resolutions.
+- **Focus**: SMA (Superintendencia del Medio Ambiente) rulings and SEA (Servicio de Evaluación Ambiental) processes.
+- **Data Goal**: Connecting environmental standards to specific case precedents in the environmental courts.
 
-### Environmental Law (Pilot)
+## 💼 Labor Law (Derecho Laboral)
+The most active domain in terms of volume.
+- **Focus**: *Tutela de Derechos Fundamentales* and *Despido Injustificado*.
+- **Data Goal**: Creating a comprehensive graph of DT (Dirección del Trabajo) administrative rulings and their application by Labor Courts.
 
-**Why first:** Bounded regulatory universe, clear procedural paths.
+## 🏛️ Citizen Assistance (Acceso a la Justicia)
+Translating technical legal complexity into actionable information.
+- **Focus**: Early-stage orientation for common legal conflicts.
+- **Data Goal**: Ensuring the "legal orientation" is always consistent with the latest Supreme Court trends (Sentencias Unificadoras).
 
-**Coverage:**
-- Environmental impact assessment (EIA/SEA)
-- Sectoral permits and approvals
-- Tribunal Ambiental jurisprudence
-- Key regulations (Ley 19.300, Ley 20.417)
+---
 
-**Status:** Ingestion complete, retrieval operational, graph in progress.
+## 🏗️ How we Scale to a New Domain
+When we decide to open a new domain (e.g., Family Law or Tax Law), the process is as follows:
 
-### Labor Law (Expansion)
+1.  **Source Identification**: Define the endpoints for scraping (usually PJUD + Regulatory Agency).
+2.  **Canonical Sampling**: Select high-value docs to create a domain-specific goldset.
+3.  **Prompt Engineering**: Update the Researcher/Judge subagents with domain-specific heuristics.
+4.  **Review Sprint**: A focused effort to approve at least 500 relations into the Canonical Graph.
 
-**Why second:** High practical value, large jurisprudence volume, procedural complexity.
+---
 
-**Coverage:**
-- Individual labor relations (contracts, dismissal, rights)
-- Collective labor law (unions, bargaining, strikes)
-- Labor courts (Juzgados del Trabajo, Cortes)
-- DT fiscalizaciones and resolutions
-- SUSESO social security rulings
-
-**Status:**
-- ~4,000 QA pairs consolidated
-- PJUD labor scraper operational
-- Procurador-digital MVP for procedural deadlines
-- Domain-specific BETO fine-tuning
-
-## Planned Domains
-
-### Citizen-Facing (Lexito)
-
-**Purpose:** Simplified retrieval for non-lawyers.
-
-**Scope:**
-- Common legal questions (tenancy, consumer, employment basics)
-- Plain-language explanations
-- Direct citations to sources
-
-**Status:** Concept phase.
-
-### Administrative Law
-
-**Purpose:** Administrative procedure and state liability.
-
-**Scope:** To be defined based on lessons from current domains.
-
-## Domain Validation Checklist
-
-Before a domain is considered "validated":
-
-- [ ] Sources identified and scrapers operational
-- [ ] Corpus ingested and indexed
-- [ ] QA goldset constructed (min 500 pairs)
-- [ ] Retrieval metrics established (MRR, recall)
-- [ ] Domain-specific edge cases documented
-- [ ] At least one application demonstrates value
-
-## Why Not Full Legal Coverage Now
-
-Attempting all Chilean law at once would:
-- Require massive upfront annotation
-- Produce lower quality per domain
-- Hide domain-specific edge cases
-- Overpromise on completeness
-
-Our approach: **prove it works on two domains, then expand with confidence.**
+## 📊 Current Coverage (April 2026)
+| Domain | Docs in Vault | Graph Status | Application |
+| :--- | :--- | :--- | :--- |
+| **Labor** | 1,200+ | Production | Procurador / Lexito |
+| **Environmental** | 850+ | Beta | Internal Review |
+| **Procedural** | 500+ | Production | Procurador |
+| **Constitutional**| 300+ | Research | - |

@@ -1,90 +1,51 @@
-# Architecture
+# 🏗️ Architecture & Core Philosophy
 
-## Why a Legal Graph
+Legal analysis requires more than simple document retrieval. In the Chilean legal system, practitioners need explicit **legal structure**: which sources relate to which claims, under what role, and with what evidence. 
 
-Legal analysis requires more than document retrieval. Practitioners need explicit legal structure: which sources relate to which claims, under what role, and with what evidence. A legal graph models entities and relations as inspectable objects rather than implicit text patterns.
+Our **Legal Knowledge Graph (LKG)** models entities and relations as inspectable objects rather than implicit text patterns.
 
-## System Layers
+---
 
-### Layer 0: Scrapers
+## 📊 The 7-Layer Stack
 
-Collect legal sources from Chilean institutions:
-- PJUD (sentencias, resoluciones)
-- DT (fiscalizaciones)
-- SUSESO (security social rulings)
-- Academia Judicial (training materials)
-- LeyChile / BCN (normative)
+| Layer | Name | Primary Responsibility |
+| :--- | :--- | :--- |
+| **0** | **Scrapers** | Data acquisition via PJUD, DT, SUSESO, and BCN (LeyChile). |
+| **1** | **IndexO** | Semantic retrieval with fine-tuned BETO (Chilean Legal QA). |
+| **2** | **Reviewer** | Human-in-the-loop curation and goldset construction. |
+| **3** | **Review Graph** | State machine for relation validation (PENDING → APPROVED). |
+| **4** | **LKG (Canonical)** | The source of truth. Verified edges with hash-based evidence. |
+| **5** | **LexO-Alpha** | Multi-agent reasoning (NIFs) and orchestration. |
+| **6** | **Applications** | Products: Procurador-digital, Lexito, Case Writer. |
 
-### Layer 1: IndexO / Retrieval
+---
 
-Semantic retrieval infrastructure:
-- BETO encoder fine-tuned on Chilean legal QA
-- 768-dimensional embeddings
-- Vault with ~3,000 legal documents
-- Domain-specific ranking models
+## ⚖️ System Pillars
 
-### Layer 2: Legal Reviewer
+### 1. Canonicalization as Core Control
+Canonicalization provides reproducible text units and stable references used downstream. This ensures **evidence traceability**: every claim made by an agent can be traced back to a specific version of a document in the vault.
 
-Human curation layer:
-- Deep review window (full document labeling)
-- Quick triage window (relation validation)
-- Goldset construction for evaluation
-- Quality gates for downstream layers
+### 2. Human-Centric Validation
+Human review is integrated into the architecture, not treated as optional. The **Review Graph** acts as a buffer; ambiguous legal edges are manually reviewed before they enter high-confidence answer paths.
 
-### Layer 3: Review Graph
+### 3. Fail-Closed Answer Path
+Answer generation is strictly constrained by evidence availability and review status. If the support from the Canonical Graph is insufficient, the system knows to **abstain** rather than hallucinate.
 
-Intermediate relations layer:
-- Machine-suggested relations pending review
-- State machine: PENDING → APPROVED / REJECTED / EXPIRED
-- Prevents unvalidated relations from entering canonical graph
-- Cola estructurada para revisión humana
+### 4. Semantic Intelligence
+We don't use generic models for search. **IndexO** uses a transformer-based encoder (BETO) specifically trained on the nuances of Chilean administrative and judicial language.
 
-### Layer 4: Graph-Legal-IR (Canonical)
+---
 
-Canonical legal graph:
-- Only reviewed, approved relations enter
-- Hash-verified evidence for each relation
-- Temporal metadata (validity periods)
-- Designed for transparency and auditability
+## 🔄 Data Flow Protocol
 
-### Layer 5: LexO-Alpha
-
-Legal reasoning agent:
-- Operates over graph + vault + live retrieval
-- Generates Normative Interaction Frames (structured legal reasoning)
-- 9 specialized subagents for different tasks
-- Telegram gateway for direct interaction
-
-### Layer 6: Applications
-
-End-user products:
-- Procurador-digital: procedural deadline calculator
-- Lexito: citizen-facing assistant
-- lexo-case-writer: document drafting
-- lexo-simulated-trial: training environment
-
-## Role of Canonicalization
-
-Canonicalization is a core control point. It provides reproducible text units and stable references used downstream by extraction, graph loading, review, and retrieval. Without canonicalization, evidence traceability degrades quickly.
-
-## Human Review Integration
-
-Human review is integrated into the architecture, not treated as optional. Ambiguous legal edges are reviewed before they enter high-confidence answer paths. The review graph state machine ensures nothing is forgotten or assumed valid.
-
-## Retrieval and Reasoning
-
-The retrieval layer (IndexO + BETO) provides candidates. The reasoning layer (LexO-Alpha) assembles evidence, applies legal logic, and knows when to abstain. The graph layer provides verified structure.
-
-## Fail-Closed Answer Path
-
-Answer generation is constrained by evidence availability and review status. If support is insufficient or unreviewed, the system abstains rather than fabricating confidence.
-
-## Data Flow
-
-```
-Sources → Scrapers → Vault → IndexO
-                              ↓
-         Relations → Review Graph → Canonical Graph
-                              ↓
-                      LexO-Alpha → Applications
+```mermaid
+graph TD
+    A[Public Sources] --> B[Scrapers]
+    B --> C[(Vault/Index)]
+    C --> D[Relation Extraction]
+    D --> E{Review Graph}
+    E -- Rejected --> F[Archive]
+    E -- Approved --> G[(Canonical Graph)]
+    G --> H[LexO-Alpha Reasoning]
+    H --> I[End Applications]
 ```
