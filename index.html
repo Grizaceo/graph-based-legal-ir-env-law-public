@@ -3,51 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Graph-Based Legal IR for Environmental Law</title>
-  <meta name="description" content="Evidence-first legal information retrieval and legal graph modeling for Chilean environmental law.">
+  <title>Graph-Based Legal IR</title>
+  <meta name="description" content="Evidence-first legal information retrieval for Chilean law.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="container">
     <header class="hero section">
       <p class="kicker">Public Documentation Repository</p>
-      <h1>Graph-Based Legal IR for Environmental Law</h1>
-      <p class="subtitle">Evidence-first legal information retrieval and legal graph modeling for Chilean environmental law.</p>
+      <h1>Graph-Based Legal IR</h1>
+      <p class="subtitle">Evidence-first legal information retrieval for Chilean law.</p>
       <p class="summary">
-        This repository documents an explainable legal retrieval project based on an explicit legal graph,
-        exact textual evidence, and human review of ambiguous relations.
+        We started with focused domains — environmental and labor law — to validate the methodology
+        before expanding. This repository documents the architecture, methodology, and current status.
       </p>
     </header>
 
     <section class="section">
-      <h2>Architecture Overview</h2>
-      <p>
-        The public architecture includes ingestion, parsing/canonicalization, relation extraction, graph loading,
-        retrieval/planner, review, and controlled answer bundles. A future transition toward timeline/state/transition
-        logic is being explored as a later evolution.
-      </p>
-      <img src="assets/architecture-overview.svg" alt="Architecture overview diagram">
+      <h2>What Makes This Different</h2>
+      <ul>
+        <li><strong>Evidence-first:</strong> relations grounded in exact text, not paraphrase</li>
+        <li><strong>Fail-closed:</strong> abstains when evidence is insufficient</li>
+        <li><strong>Human review:</strong> ambiguous edges require validation</li>
+        <li><strong>Incremental domains:</strong> prove on small scopes first</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Ecosystem Layers</h2>
+      <table>
+        <tr><td>Layer 0</td><td>Scrapers</td><td>PJUD, DT, SUSESO, Academia Judicial</td></tr>
+        <tr><td>Layer 1</td><td>IndexO</td><td>Retrieval, BETO fine-tuned</td></tr>
+        <tr><td>Layer 2</td><td>Reviewer</td><td>Human curation</td></tr>
+        <tr><td>Layer 3</td><td>Review Graph</td><td>Pending relations</td></tr>
+        <tr><td>Layer 4</td><td>Graph-Legal-IR</td><td>Canonical legal graph</td></tr>
+        <tr><td>Layer 5</td><td>LexO-Alpha</td><td>Legal reasoning agent</td></tr>
+        <tr><td>Layer 6</td><td>Applications</td><td>Procurador-digital, Lexito</td></tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Current Domains</h2>
+      <ul>
+        <li><strong>Environmental law</strong> — pilot domain, ingestion complete</li>
+        <li><strong>Labor law</strong> — expansion domain, ~4,000 QA pairs, scrapers operational</li>
+        <li><strong>Citizen-facing</strong> — planned (Lexito)</li>
+      </ul>
+      <p class="note">Domain strategy: prove on small scopes before expanding.</p>
     </section>
 
     <section class="section">
       <h2>Current Status</h2>
       <p>
-        The core development repository remains private while MVP architecture, evaluation pipelines,
-        and review workflows are being consolidated. This repository is public-facing documentation.
+        Retrieval operational (IndexO + BETO). LexO-Alpha agent active via Telegram.
+        Procurador-digital MVP for labor deadlines. Core repos private during consolidation.
       </p>
-    </section>
-
-    <section class="section">
-      <h2>Roadmap Snapshot</h2>
-      <ul>
-        <li>MVP hardening</li>
-        <li>Review and goldset consolidation</li>
-        <li>Public demo</li>
-        <li>Timeline / point-in-time state</li>
-        <li>Legal transition primitives</li>
-        <li>LGWM-oriented expansion</li>
-      </ul>
-      <p class="note">Public demo: coming later.</p>
     </section>
 
     <section class="section links">
@@ -55,12 +65,13 @@
       <ul>
         <li><a href="README.md">README</a></li>
         <li><a href="docs/architecture.md">Architecture</a></li>
+        <li><a href="docs/ecosystem.md">Ecosystem</a></li>
+        <li><a href="docs/domains.md">Domains</a></li>
         <li><a href="docs/methodology.md">Methodology</a></li>
         <li><a href="docs/current-status.md">Current Status</a></li>
         <li><a href="docs/roadmap.md">Roadmap</a></li>
         <li><a href="docs/public-demo-plan.md">Public Demo Plan</a></li>
         <li><a href="docs/repository-policy.md">Repository Policy</a></li>
-        <li><a href="docs/PUBLISH_FROM_TERMINAL.md">Publish From Terminal</a></li>
       </ul>
     </section>
   </main>

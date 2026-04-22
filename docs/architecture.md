@@ -2,51 +2,89 @@
 
 ## Why a Legal Graph
 
-Environmental legal analysis requires more than document retrieval. Practitioners need explicit legal structure: which sources relate to which claims, under what role, and with what evidence. A legal graph supports this by modeling entities and relations as inspectable objects rather than implicit text patterns.
+Legal analysis requires more than document retrieval. Practitioners need explicit legal structure: which sources relate to which claims, under what role, and with what evidence. A legal graph models entities and relations as inspectable objects rather than implicit text patterns.
 
 ## System Layers
 
-1. **Ingestion layer**
-Collects legal sources and metadata from curated inputs.
+### Layer 0: Scrapers
 
-2. **Parsing and canonicalization layer**
-Transforms sources into stable canonical text units and normalized identifiers.
+Collect legal sources from Chilean institutions:
+- PJUD (sentencias, resoluciones)
+- DT (fiscalizaciones)
+- SUSESO (security social rulings)
+- Academia Judicial (training materials)
+- LeyChile / BCN (normative)
 
-3. **Relation extraction layer**
-Generates candidate legal relations with evidence references.
+### Layer 1: IndexO / Retrieval
 
-4. **Graph loading layer**
-Loads entities and validated relations into the legal graph.
+Semantic retrieval infrastructure:
+- BETO encoder fine-tuned on Chilean legal QA
+- 768-dimensional embeddings
+- Vault with ~3,000 legal documents
+- Domain-specific ranking models
 
-5. **Retrieval and planner layer**
-Routes queries through evidence-aware retrieval and controlled planning logic.
+### Layer 2: Legal Reviewer
 
-6. **Review layer**
-Supports human triage and validation of ambiguous or high-impact relations.
+Human curation layer:
+- Deep review window (full document labeling)
+- Quick triage window (relation validation)
+- Goldset construction for evaluation
+- Quality gates for downstream layers
 
-7. **Answer path layer**
-Produces controlled answer bundles with evidence links and abstention behavior.
+### Layer 3: Review Graph
+
+Intermediate relations layer:
+- Machine-suggested relations pending review
+- State machine: PENDING → APPROVED / REJECTED / EXPIRED
+- Prevents unvalidated relations from entering canonical graph
+- Cola estructurada para revisión humana
+
+### Layer 4: Graph-Legal-IR (Canonical)
+
+Canonical legal graph:
+- Only reviewed, approved relations enter
+- Hash-verified evidence for each relation
+- Temporal metadata (validity periods)
+- Designed for transparency and auditability
+
+### Layer 5: LexO-Alpha
+
+Legal reasoning agent:
+- Operates over graph + vault + live retrieval
+- Generates Normative Interaction Frames (structured legal reasoning)
+- 9 specialized subagents for different tasks
+- Telegram gateway for direct interaction
+
+### Layer 6: Applications
+
+End-user products:
+- Procurador-digital: procedural deadline calculator
+- Lexito: citizen-facing assistant
+- lexo-case-writer: document drafting
+- lexo-simulated-trial: training environment
 
 ## Role of Canonicalization
 
 Canonicalization is a core control point. It provides reproducible text units and stable references used downstream by extraction, graph loading, review, and retrieval. Without canonicalization, evidence traceability degrades quickly.
 
-## Relation Extractor
+## Human Review Integration
 
-The extractor proposes relation candidates between legal entities and attaches evidence references. These candidates are not all treated as final truth. They pass through validation logic and, where necessary, human review.
+Human review is integrated into the architecture, not treated as optional. Ambiguous legal edges are reviewed before they enter high-confidence answer paths. The review graph state machine ensures nothing is forgotten or assumed valid.
 
-## Human Review
+## Retrieval and Reasoning
 
-Human review is integrated into the architecture, not treated as a downstream optional step. Ambiguous legal edges are reviewed before they enter high-confidence answer paths.
+The retrieval layer (IndexO + BETO) provides candidates. The reasoning layer (LexO-Alpha) assembles evidence, applies legal logic, and knows when to abstain. The graph layer provides verified structure.
 
-## Retrieval and Planner
+## Fail-Closed Answer Path
 
-The retrieval/planner stage is designed to prioritize supported legal evidence over free-form generation. The planner controls how evidence is assembled and when the system must abstain.
+Answer generation is constrained by evidence availability and review status. If support is insufficient or unreviewed, the system abstains rather than fabricating confidence.
 
-## Controlled Answer Path
+## Data Flow
 
-Answer generation is constrained by evidence availability and validation status. If support is insufficient, the system should not produce a confident legal claim.
-
-## MVP Core and Future Evolution
-
-The current public architecture describes an MVP-oriented explainable retrieval core. A future evolution targets timeline/state/transition logic (LGWM-oriented direction), but this should be understood as an active conceptual and engineering trajectory, not as a fully public production layer.
+```
+Sources → Scrapers → Vault → IndexO
+                              ↓
+         Relations → Review Graph → Canonical Graph
+                              ↓
+                      LexO-Alpha → Applications
+```

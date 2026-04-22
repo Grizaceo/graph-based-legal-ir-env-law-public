@@ -1,40 +1,64 @@
 # Current Status
 
-## What Is Conceptually Built
+## What Is Operational
 
-The project has a defined conceptual architecture for evidence-first legal retrieval, explicit legal graph modeling, and review-aware answer control.
+### Scrapers (Layer 0)
+- PJUD laboral scraper: operational, regular downloads
+- DT investigations: operational
+- SUSESO: operational via JSONP workaround
+- Academia Judicial: operational via Vimeo transcripts
+- LeyChile: bulk download capability
 
-Core concepts are established:
-- canonical legal text handling,
-- relation extraction with evidence linkage,
-- explicit review workflow,
-- controlled answer path with abstention rules.
+### Retrieval (Layer 1)
+- IndexO vault: ~3,000 documents indexed
+- BETO encoder: fine-tuned on legal QA
+- MRR@10: 0.6256 (plateaued, hard negatives pending)
+- Domain retrieval: environmental and labor operational
+
+### Review (Layer 2)
+- Windows A/B defined
+- Label taxonomy established
+- Goldset growing (manual addition)
+
+### Review Graph (Layer 3)
+- State machine designed
+- Awaiting full implementation
+
+### Agents (Layer 5)
+- LexO-Alpha: operational via Telegram
+- 9 subagents defined
+- Normative Interaction Frame methodology established
+
+### Applications (Layer 6)
+- Procurador-digital: MVP for labor procedural deadlines
+- Other applications: concept phase
 
 ## What Is Being Consolidated
 
-Current work is focused on MVP consolidation in the private core repository, including:
-- architecture hardening,
-- evaluation pipeline stabilization,
-- review workflow reliability,
-- scope control for public release.
+Current priority work:
+- Hard negative mining for BETO (break MRR plateau)
+- Review graph implementation
+- Graph-Legal-IR canonical population
+- Procurador-digital domain expansion
 
 ## What Remains Private
 
-The primary implementation repository remains private while the MVP technical baseline is being hardened.
+Core repositories remain private during consolidation:
+- indexo-retriever-prod
+- graph-legal-ir (core)
+- lexo-research-lab
+- legal-ecosystem
+- procurar-digital
 
-## What Is Not Yet Public
+## Public Components
 
-This public repository does not expose:
-- a full production implementation,
-- unrestricted public inference interfaces,
-- complete internal evaluation assets,
-- all operational tooling from the private core.
+This repository serves as the public documentation surface. Future public releases may include:
+- Constrained demos (specific domains)
+- Open-source components (scrapers, tools)
+- Evaluation datasets (goldsets)
 
-## What Is Expected to Be Published Later
+## What Is Not Claimed
 
-Planned future public additions include:
-- a constrained public demo,
-- more visual walkthrough artifacts,
-- expanded documentation on evaluation and review boundaries.
-
-This staged release approach is intentional and aligned with legal reliability requirements.
+- Full legal coverage: only labor and environmental domains operational
+- Perfect retrieval: MRR at 0.62, not 1.0
+- Autonomous legal advice: LexO-Alpha assists, does not replace counsel

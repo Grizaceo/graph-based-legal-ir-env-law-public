@@ -1,16 +1,39 @@
 # Repository Policy
 
-## Why This Public Repository Is Documentation-First
+## Why Documentation-First
 
-This repository is intentionally documentation-focused. It serves as a public technical overview while the implementation core remains private.
+This repository intentionally serves documentation-first. It provides a public technical overview while implementation matures in private repositories.
 
-## Why the Core Remains Private for Now
+## Why the Core Remains Private
 
-- **MVP hardening:** architecture and reliability controls are still being consolidated.
-- **Evaluation integrity:** benchmarks and quality gates require controlled iteration.
-- **Review workflow stabilization:** human validation loops are being refined before broader exposure.
-- **Controlled release strategy:** public surfaces are opened gradually to avoid overstating readiness.
+- **Methodology validation:** proving the approach works on bounded domains first
+- **Evaluation integrity:** benchmarks and quality gates require controlled iteration
+- **Review workflow maturity:** human validation loops being refined before broader exposure
+- **Controlled release:** public surfaces opened gradually to avoid overstating readiness
 
 ## Public Release Approach
 
-The strategy is to publish documentation first, then a constrained demo, and then broader surfaces as evidence quality, review maturity, and methodological safeguards become robust.
+The strategy is staged:
+
+1. **Documentation** (current) — architecture, methodology, status
+2. **Constrained demo** — limited domain, transparent limits
+3. **Tools and components** — scrapers, utilities
+4. **Broader surfaces** — as quality justifies
+
+## What May Become Public
+
+- Domain goldsets (annotated QA pairs)
+- Scrapers and data acquisition tools
+- Evaluation datasets (without source PII)
+- Methodology documentation
+
+## What Remains Private
+
+- Core graph implementation
+- Full vault contents
+- Production retrieval infrastructure
+- Agent orchestration details
+
+## Incremental Confidence
+
+We started with environmental law. Then labor law. Each domain proves the methodology works before expanding further. This is not a "build everything then release" approach — it's "validate incrementally, release responsibly."

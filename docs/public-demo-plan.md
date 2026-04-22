@@ -2,25 +2,56 @@
 
 ## Objective
 
-The public demo should show explainable legal retrieval behavior with transparent scope limits.
+The public demo will show **explainable legal retrieval** with transparent scope limits. It demonstrates the methodology works on constrained domains.
+
+## Guiding Principle
+
+Release only when evidence and review surfaces are stable enough for credible public interpretation. No vaporware.
 
 ## Expected Demo Components
 
-1. **Legal graph exploration**
-Basic navigation of entities and relations in a curated domain subset.
+1. **Domain-limited queries**
+   - Labor law or environmental law only
+   - Clear scope disclaimers
 
-2. **Evidence-backed relation inspection**
-Ability to inspect relation support through exact evidence references.
+2. **Legal graph exploration**
+   - Navigate entities and relations in curated subset
+   - See evidence backing each relation
 
-3. **Review workflow glimpse**
-A limited view of how ambiguous relations are reviewed and classified.
+3. **Evidence inspection**
+   - Exact snippets supporting relations
+   - Source document links
 
-4. **Controlled answer examples**
-Examples of answer bundles that show evidence, scope, and abstention behavior.
+4. **Review workflow glimpse**
+   - How ambiguous relations are handled
+   - Pending vs approved states
 
-5. **Limitations and scope disclaimers**
-Visible statements about what the demo does not claim or automate.
+5. **Controlled answer examples**
+   - Answer bundles with evidence
+   - Abstention when evidence insufficient
+   - Clear scope and limitation statements
 
-## Release Principle
+6. **Limitations display**
+   - What the demo does NOT do
+   - Disclaimers about legal advice
 
-The demo should be released only when evidence and review surfaces are stable enough to support a credible public interpretation.
+## Domain for First Demo
+
+**Labor law** is the leading candidate:
+- Largest QA corpus
+- Procurador-digital already demonstrates procedural logic
+- High practical relevance
+- Bounded scope
+
+## Timeline
+
+- Prerequisite: Complete domain validation checklist
+- Target: Late 2026 Q3 or Q4
+- Quality gate: Stable retrieval metrics, reviewed relations
+
+## What Will NOT Be in the Demo
+
+- Full legal coverage claims
+- Autonomous legal advice
+- Real-time court integration
+- Unreviewed relations as authoritative
