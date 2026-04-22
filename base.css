@@ -38,8 +38,8 @@ h1 {
   font-weight: 510;
   letter-spacing: -0.04em;
   line-height: 1.0;
-  margin-bottom: 24px;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.) 100%);
+  margin-bottom: 16px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.7) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -50,21 +50,23 @@ h2 {
   font-size: 2rem;
   font-weight: 510;
   letter-spacing: -0.03em;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .lead {
   font-size: 1.25rem;
   color: var(--text-tertiary);
-  max-width: 700px;
-  margin-bottom: 48px;
+  max-width: 800px;
+  margin-bottom: 32px;
+  text-align: justify;
+  line-height: 1.6;
 }
 
 /* Horizontal Pipeline */
 .pipeline-container {
   display: flex;
   gap: 16px;
-  margin: 64px 0;
+  margin: 40px 0;
   overflow-x: auto;
   padding-bottom: 16px;
 }
