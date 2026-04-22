@@ -1,39 +1,31 @@
-# Roadmap
+# Strategic Vision & Roadmap 2026
 
-## Completed
+LexCon systems are built with a focus on precision and exponential scalability. Our roadmap reflects a transition from specialized pilot domains to a unified legal reasoning infrastructure.
 
-- [x] Environmental law pilot (ingestion to retrieval)
-- [x] Labor law expansion (QA corpus, scrapers)
-- [x] LexO agent operational
-- [x] Procurador-digital MVP (labor deadlines)
-- [x] BETO fine-tuning on legal QA
-- [x] Telegram gateway for LexO
+---
 
-## Current Phase (2026 Q2)
+## 🟢 Phase 1: The Foundations (Current)
+*Focus: Data Integrity & Pilot Success*
 
-- [ ] Break MRR plateau with hard negative training
-- [ ] Implement review graph state machine
-- [ ] Populate canonical graph with reviewed relations
-- [ ] Expand Procurador-digital to executive procedure (CPC)
-- [ ] Document methodology and architecture publicly
+- **Domain Dominance**: Achieve 100% normative and jurisprudential coverage for **Environmental** and **Labor** law.
+- **Fail-Closed Maturity**: Stabilize the LexO engine to ensure zero-hallucination outputs through strict evidence-anchoring.
+- **IndexO Optimization**: Refine high-precision semantic retrieval for specialized legal terminology.
 
-## Next Milestone (2026 Q3-Q4)
+## 🔵 Phase 2: Knowledge Expansion (2026 Q3-Q4)
+*Focus: Relational Intelligence & Access*
 
-- [ ] Public demo for labor law queries
-- [ ] Evidence-backed relation inspection interface
-- [ ] Lexito citizen-facing prototype
-- [ ] First domain validation complete (all checklist items)
+- **Canonical Graph Activation**: Transition from semantic search to a verified relational graph (LKG), connecting statutes directly to relevant court rulings.
+- **Citizen-Facing Interfaces**: Launch of Lexito (distilled version) to provide accessible legal clarity for non-lawyers.
+- **Procedural Engine**: Full integration of automated deadline tracking for Chilean civil and labor procedures.
 
-## Later Phase
+## 🟣 Phase 3: Scalable Ecosystem (2027 & Beyond)
+*Focus: Universal Legal Architecture*
 
-- [ ] Administrative law domain
-- [ ] Timeline/state/transition logic (LGWM direction)
-- [ ] Multi-domain retrieval
-- [ ] Open-source tool releases
+- **Vertical Expansion**: Incorporate Administrative and Civil law domains into the core Knowledge Graph.
+- **Open-API Infrastructure**: Enable secure, validated access to the LKG for third-party legal-tech developers and firms.
+- **Multi-Jurisdiction Design**: Abstract the architecture to support legal systems beyond the Chilean framework, starting with regional partners.
 
-## Principles
+---
 
-- Ship working components, not vaporware
-- Validate on small domains before expanding
-- Public release only when quality justifies it
-- Evidence-first, always
+### Core Commitment
+We do not build generic AI. We build **Verified Legal Infrastructure**. Our progress is measured not by the complexity of our models, but by the reliability of our validated evidence.
