@@ -3,71 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexCon | Documentación</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>LexCon Docs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        .back-nav {
+        .logo-svg {
+            vertical-align: middle;
+            margin-top: -2px;
+        }
+        .header-mini {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
             margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-subtle);
         }
-        .back-nav a {
-            color: var(--accent-glow);
-            text-decoration: none;
+        .header-mini strong {
             font-size: 14px;
-            font-weight: 510;
+            color: var(--accent-glow);
+            letter-spacing: 0.1em;
         }
-        #doc-content {
-            animation: fadeIn 0.4s ease-out;
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        pre {
+            background: #0f1115;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-subtle);
         }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+        h1, h2, h3 { color: var(--text-primary); margin-top: 40px; }
+        p, li { color: var(--text-secondary); }
     </style>
 </head>
 <body>
     <div class="layout">
-        <nav class="back-nav">
-            <a href="index.html">← Volver al inicio</a>
-        </nav>
-        
-        <div id="doc-content" class="content">
-            <p style="color: var(--text-tertiary)">Cargando documentación...</p>
+        <div class="header-mini">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <strong>LEX<svg class="logo-svg" width="14" height="14" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.3"/>
+                    <circle cx="22" cy="22" r="5" fill="#5e6ad2"/>
+                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2" stroke-linecap="round"/>
+                </svg> CON</strong>
+            </a>
+            <a href="index.html" class="btn btn-ghost" style="font-size: 12px; padding: 6px 12px;">← Volver</a>
         </div>
-
-        <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border-subtle); color: var(--text-tertiary); font-size: 13px;">
-            LexCon Documentation Hub &bull; 2026
-        </footer>
+        
+        <div id="content">Cargando documentación...</div>
     </div>
 
     <script>
-        async function loadDoc() {
-            const params = new URLSearchParams(window.location.search);
-            const page = params.get('page');
-            const container = document.getElementById('doc-content');
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('page') || 'docs/architecture.md';
 
-            if (!page) {
-                container.innerHTML = "<h1>Error</h1><p>No se especificó nunguna página para cargar.</p>";
-                return;
-            }
-
-            try {
-                const response = await fetch(page);
-                if (!response.ok) throw new Error('No se pudo encontrar el archivo.');
-                const text = await response.text();
-                
-                // Clean up YAML frontmatter if present
-                const cleanContent = text.replace(/^---[\s\S]*?---/, '');
-                
-                container.innerHTML = marked.parse(cleanContent);
-                document.title = "LexCon | " + page.split('/').pop().replace('.md', '');
-            } catch (err) {
-                container.innerHTML = "<h1>Error 404</h1><p>La documentación solicitada no existe o no pudo ser cargada.</p>";
-            }
-        }
-
-        window.onload = loadDoc;
+        fetch(page)
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('content').innerHTML = marked.parse(text);
+            })
+            .catch(err => {
+                document.getElementById('content').innerHTML = 'Error al cargar el documento: ' + err.message;
+            });
     </script>
 </body>
 </html>
