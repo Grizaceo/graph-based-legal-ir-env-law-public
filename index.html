@@ -3,116 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexCon | Legal Architecture</title>
+    <title>LexCon Ecosystem | Legal IR Architecture</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="layout">
+    <div class="container">
         <header>
-            <h1>LexCon Ecosystem</h1>
-            <p class="lead">Un marco de referencia para la soberanía de datos jurídicos y la construcción de grafos de conocimiento validados bajo el estándar LexO.</p>
+            <div class="badge">Legal Tech Ecosystem</div>
+            <h1>LexCon Infrastructure</h1>
+            <p class="description">Construyendo el futuro de la inteligencia jurídica chilena mediante grafos de conocimiento validados y razonamiento agéntico.</p>
         </header>
 
-        <section>
-            <h2>Arquitectura de Flujo</h2>
-            <div class="system-map">
-                <!-- STEP 0 -->
-                <div class="flow-step">
-                    <div class="step-id">SOURCE</div>
-                    <div class="step-card">
-                        <h3>Ingesta Multimodal</h3>
-                        <p>Los scrapers de Capa 0 extraen sentencias crudas de PJUD, DT y BCN. El dato entra en un estado NO CANÓNICO, preservando el origen y el hash de integridad.</p>
-                        <div class="tags">
-                            <span class="tag">n8n-judicial</span>
-                            <span class="tag">RAW_DATA</span>
-                        </div>
+        <main>
+            <section>
+                <div class="process-diagram">
+                    <div class="process-node">
+                        <div class="node-icon">📥</div>
+                        <h3>Ingesta</h3>
+                        <p>Scraping masivo de PJUD y DT. Limpieza y preparación de datos crudos.</p>
+                    </div>
+                    <div class="process-node">
+                        <div class="node-icon">🧠</div>
+                        <h3>IndexO</h3>
+                        <p>Búsqueda semántica usando BETO (Embeddings de 768 dimensiones).</p>
+                    </div>
+                    <div class="process-node">
+                        <div class="node-icon">⚖️</div>
+                        <h3>Validación</h3>
+                        <p>Filtrado humano sobre el Review Graph para asegurar veracidad canónica.</p>
+                    </div>
+                    <div class="process-node">
+                        <div class="node-icon">🤖</div>
+                        <h3>Agentes</h3>
+                        <p>LexO-Alpha orquesta la resolución de casos usando el grafo validado.</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- STEP 1 -->
-                <div class="flow-step">
-                    <div class="step-id">VECTOR</div>
-                    <div class="step-card">
-                        <h3>Espacio Latente (IndexO)</h3>
-                        <p>Indexado semántico mediante BETO (fine-tuned). Los documentos se transforman en representaciones vectoriales para permitir la recuperación por significado jurídico, no solo por palabras clave.</p>
-                        <div class="tags">
-                            <span class="tag">EMBEDDINGS_768D</span>
-                            <span class="tag">INDEXO</span>
-                        </div>
-                    </div>
+            <div class="grid">
+                <div class="card">
+                    <h2>⚙️ Capas de Sistema</h2>
+                    <p>Una arquitectura modular de 7 niveles (0-6) que separa la adquisición, la confianza y la aplicación del conocimiento jurídico.</p>
                 </div>
-
-                <!-- STEP 2 -->
-                <div class="flow-step" style="--node-accent: #ef4444;">
-                    <div class="step-id" style="border-color: var(--node-accent); color: var(--node-accent); font-weight: bold;">GATE</div>
-                    <div class="step-card">
-                        <h3>Filtro de Validación Canónica</h3>
-                        <p>El punto crítico de control. El <i>Review Graph</i> gestiona las sugerencias generadas por modelos. Los expertos aprueban o rechazan las relaciones antes de que pasen al conocimiento productivo.</p>
-                        <div class="tags">
-                            <span class="tag">HUMAN_IN_THE_LOOP</span>
-                            <span class="tag">TRUST_LAYER</span>
-                        </div>
-                    </div>
+                <div class="card">
+                    <h2>🛡️ Zero Hallucination</h2>
+                    <p>El uso de un Grafo Canónico (LKG) garantiza que cada respuesta del agente tenga evidencia verificable por hash en una fuente oficial.</p>
                 </div>
-
-                <!-- STEP 3 -->
-                <div class="flow-step">
-                    <div class="step-id">GRAPH</div>
-                    <div class="step-card">
-                        <h3>Canonical Truth (LKG)</h3>
-                        <p>El grafo de conocimiento consolidado. Estructuras de grafos persistentes con evidencia verificable. Aquí reside la "verdad" del sistema, lista para ser consultada por agentes de razonamiento.</p>
-                        <div class="tags">
-                            <span class="tag">NEO4J_OR_RDF</span>
-                            <span class="tag">CANONICAL_STATE</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- STEP 4 -->
-                <div class="flow-step">
-                    <div class="step-id">AGENT</div>
-                    <div class="step-card">
-                        <h3>Orquestación LexO-Alpha</h3>
-                        <p>Agentes autónomos que descomponen problemas jurídicos en tareas de investigación. No generan texto al azar; consultan el LKG para construir argumentos fundados.</p>
-                        <div class="tags">
-                            <span class="tag">MULTI_AGENT_SIM</span>
-                            <span class="tag">NIF_ENGINE</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Pilares de Diseño</h2>
-            <div class="bento-grid">
-                <div class="bento-item">
-                    <h4>Auditabilidad</h4>
-                    <p>Cada relación en el grafo canónico tiene un link directo al documento fuente y una firma de auditoría del revisor humano.</p>
-                </div>
-                <div class="bento-item">
-                    <h4>Especialización</h4>
-                    <p>Enfoque vertical en dominios complejos (Ambiental, Laboral) antes de la escala horizontal, garantizando precisión técnica.</p>
-                </div>
-                <div class="bento-item">
-                    <h4>Soberanía</h4>
-                    <p>Arquitectura desacoplada de proveedores específicos de LLM, permitiendo portar el conocimiento entre distintos modelos sin pérdida de integridad.</p>
+                <div class="card">
+                    <h2>📍 Especialización</h2>
+                    <p>Verticales profundas en Derecho Ambiental y Laboral, optimizadas para la complejidad normativa chilena actual.</p>
                 </div>
             </div>
 
-            <div class="doc-links">
-                <a href="docs/architecture.md">Especificación</a>
-                <a href="docs/ecosystem.md">Ecosistema</a>
-                <a href="docs/domains.md">Estrategia</a>
-                <a href="docs/roadmap.md">Roadmap</a>
+            <div class="links">
+                <a href="docs/architecture.md" class="btn btn-primary">Arquitectura</a>
+                <a href="docs/ecosystem.md" class="btn btn-secondary">Las 7 Capas</a>
+                <a href="docs/roadmap.md" class="btn btn-secondary">Roadmap 2026</a>
             </div>
-        </section>
+        </main>
 
-        <footer style="margin-top: 8rem; padding-bottom: 4rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-            <p style="font-size: 0.75rem; color: var(--text-muted);">
-                LexCon Framework &bull; 2026 Architected Portfolio &bull; Progresión Incremental
-            </p>
+        <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid #111; color: #444; font-size: 12px;">
+            LexCon Legal Knowledge Graph &bull; LexO Standard &bull; Santiago, Chile
         </footer>
-    </main>
+    </div>
 </body>
 </html>
