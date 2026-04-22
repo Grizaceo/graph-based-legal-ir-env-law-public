@@ -1,79 +1,105 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Graph-Based Legal IR</title>
-  <meta name="description" content="Evidence-first legal information retrieval for Chilean law.">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexCon Legal Ecosystem | LKG Development</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="container">
-    <header class="hero section">
-      <p class="kicker">Public Documentation Repository</p>
-      <h1>Graph-Based Legal IR</h1>
-      <p class="subtitle">Evidence-first legal information retrieval for Chilean law.</p>
-      <p class="summary">
-        We started with focused domains — environmental and labor law — to validate the methodology
-        before expanding. This repository documents the architecture, methodology, and current status.
-      </p>
-    </header>
+    <div class="container">
+        <header class="section hero">
+            <p class="kicker">Legal Knowledge Graph Infra</p>
+            <h1>LexCon Ecosystem</h1>
+            <p class="subtitle">Infraestructura de recuperación de información jurídica y construcción de grafos canónicos bajo el estándar LexO.</p>
+            <div class="summary">
+                Este repositorio documenta un ecosistema de 7 capas diseñado para transformar datos públicos de tribunales y entidades estatales chilenas en conocimiento estructurado listo para agentes inteligentes.
+            </div>
+        </header>
 
-    <section class="section">
-      <h2>What Makes This Different</h2>
-      <ul>
-        <li><strong>Evidence-first:</strong> relations grounded in exact text, not paraphrase</li>
-        <li><strong>Fail-closed:</strong> abstains when evidence is insufficient</li>
-        <li><strong>Human review:</strong> ambiguous edges require validation</li>
-        <li><strong>Incremental domains:</strong> prove on small scopes first</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Arquitectura del Sistema</h2>
+            <p>El ecosistema opera mediante una distribución modular de responsabilidades, desde la adquisición de datos crudos hasta la implementación de interfaces ciudadanas.</p>
+            
+            <img src="assets/architecture-overview.svg" alt="Diagrama de Arquitectura LexCon" class="diagram">
 
-    <section class="section">
-      <h2>Ecosystem Layers</h2>
-      <table>
-        <tr><td>Layer 0</td><td>Scrapers</td><td>PJUD, DT, SUSESO, Academia Judicial</td></tr>
-        <tr><td>Layer 1</td><td>IndexO</td><td>Retrieval, BETO fine-tuned</td></tr>
-        <tr><td>Layer 2</td><td>Reviewer</td><td>Human curation</td></tr>
-        <tr><td>Layer 3</td><td>Review Graph</td><td>Pending relations</td></tr>
-        <tr><td>Layer 4</td><td>Graph-Legal-IR</td><td>Canonical legal graph</td></tr>
-        <tr><td>Layer 5</td><td>LexO-Alpha</td><td>Legal reasoning agent</td></tr>
-        <tr><td>Layer 6</td><td>Applications</td><td>Procurador-digital, Lexito</td></tr>
-      </table>
-    </section>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Módulo</th>
+                            <th>Función Crítica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="layer-id">Capa 0</td>
+                            <td class="layer-name">n8n-judicial</td>
+                            <td>Scraping de sentencias (PJUD, DT, SUSESO).</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 1</td>
+                            <td class="layer-name">IndexO</td>
+                            <td>Retrieval semántico y embebido de documentos.</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 2</td>
+                            <td class="layer-name">legal-reviewer</td>
+                            <td>Curación humana y validación de sugerencias.</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 3</td>
+                            <td class="layer-name">review-graph</td>
+                            <td>Manejo de estados y cola de revisión canónica.</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 4</td>
+                            <td class="layer-name">LexO-Alpha</td>
+                            <td>Razonamiento jurídico y orquestación de agentes.</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 5</td>
+                            <td class="layer-name">case-writer</td>
+                            <td>Generación asistida de escritos y teoría del caso.</td>
+                        </tr>
+                        <tr>
+                            <td class="layer-id">Capa 6</td>
+                            <td class="layer-name">LexCon-hub</td>
+                            <td>Identidad, comunidad y acceso unificado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <span class="note">Estado Actual: Desarrollo Incremental</span>
+        </section>
 
-    <section class="section">
-      <h2>Current Domains</h2>
-      <ul>
-        <li><strong>Environmental law</strong> — pilot domain, ingestion complete</li>
-        <li><strong>Labor law</strong> — expansion domain, ~4,000 QA pairs, scrapers operational</li>
-        <li><strong>Citizen-facing</strong> — planned (Lexito)</li>
-      </ul>
-      <p class="note">Domain strategy: prove on small scopes before expanding.</p>
-    </section>
+        <div class="section">
+            <h2>Dominios de Aplicación</h2>
+            <p>El proyecto utiliza una estrategia de "dominio por dominio" para asegurar precisión técnica antes de la escala general:</p>
+            <ul>
+                <li><strong>Derecho Ambiental:</strong> Mapeo profundo de normas de emisiones y resoluciones de impacto ambiental (SEA).</li>
+                <li><strong>Derecho Laboral:</strong> Análisis semántico de despidos injustificados y tutela de derechos fundamentales.</li>
+                <li><strong>Asistencia Ciudadana:</strong> Destilación de conocimiento técnico para acceso a la justicia.</li>
+            </ul>
+        </div>
 
-    <section class="section">
-      <h2>Current Status</h2>
-      <p>
-        Retrieval operational (IndexO + BETO). LexO-Alpha agent active via Telegram.
-        Procurador-digital MVP for labor deadlines. Core repos private during consolidation.
-      </p>
-    </section>
+        <div class="section">
+            <h2>Documentación Técnica</h2>
+            <ul class="links">
+                <li><a href="docs/architecture.md">Especificación de la Arquitectura</a></li>
+                <li><a href="docs/ecosystem.md">Guía de las 7 Capas</a></li>
+                <li><a href="docs/domains.md">Estrategia de Dominios y Datos</a></li>
+                <li><a href="docs/roadmap.md">Roadmap de Desarrollo 2026</a></li>
+                <li><a href="docs/current-status.md">Estado de Componentes</a></li>
+            </ul>
+        </div>
 
-    <section class="section links">
-      <h2>Documentation</h2>
-      <ul>
-        <li><a href="README.md">README</a></li>
-        <li><a href="docs/architecture.md">Architecture</a></li>
-        <li><a href="docs/ecosystem.md">Ecosystem</a></li>
-        <li><a href="docs/domains.md">Domains</a></li>
-        <li><a href="docs/methodology.md">Methodology</a></li>
-        <li><a href="docs/current-status.md">Current Status</a></li>
-        <li><a href="docs/roadmap.md">Roadmap</a></li>
-        <li><a href="docs/public-demo-plan.md">Public Demo Plan</a></li>
-        <li><a href="docs/repository-policy.md">Repository Policy</a></li>
-      </ul>
-    </section>
-  </main>
+        <footer>
+            <div style="text-align: center; color: var(--muted); font-size: 0.85rem; padding-top: 40px; border-top: 1px solid var(--border);">
+                &copy; 2026 LexO Project &bull; Documentación Pública para Portfolio
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
