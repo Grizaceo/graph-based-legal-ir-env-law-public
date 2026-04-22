@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexCon | Documentación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .back-nav {
+            margin-bottom: 40px;
+        }
+        .back-nav a {
+            color: var(--accent-glow);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 510;
+        }
+        #doc-content {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <nav class="back-nav">
+            <a href="index.html">← Volver al inicio</a>
+        </nav>
+        
+        <div id="doc-content" class="content">
+            <p style="color: var(--text-tertiary)">Cargando documentación...</p>
+        </div>
+
+        <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border-subtle); color: var(--text-tertiary); font-size: 13px;">
+            LexCon Documentation Hub &bull; 2026
+        </footer>
+    </div>
+
+    <script>
+        async function loadDoc() {
+            const params = new URLSearchParams(window.location.search);
+            const page = params.get('page');
+            const container = document.getElementById('doc-content');
+
+            if (!page) {
+                container.innerHTML = "<h1>Error</h1><p>No se especificó nunguna página para cargar.</p>";
+                return;
+            }
+
+            try {
+                const response = await fetch(page);
+                if (!response.ok) throw new Error('No se pudo encontrar el archivo.');
+                const text = await response.text();
+                
+                // Clean up YAML frontmatter if present
+                const cleanContent = text.replace(/^---[\s\S]*?---/, '');
+                
+                container.innerHTML = marked.parse(cleanContent);
+                document.title = "LexCon | " + page.split('/').pop().replace('.md', '');
+            } catch (err) {
+                container.innerHTML = "<h1>Error 404</h1><p>La documentación solicitada no existe o no pudo ser cargada.</p>";
+            }
+        }
+
+        window.onload = loadDoc;
+    </script>
+</body>
+</html>

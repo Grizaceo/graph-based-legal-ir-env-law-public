@@ -4,10 +4,10 @@
 
 - [x] Environmental law pilot (ingestion to retrieval)
 - [x] Labor law expansion (QA corpus, scrapers)
-- [x] LexO-Alpha agent operational
+- [x] LexO agent operational
 - [x] Procurador-digital MVP (labor deadlines)
 - [x] BETO fine-tuning on legal QA
-- [x] Telegram gateway for LexO-Alpha
+- [x] Telegram gateway for LexO
 
 ## Current Phase (2026 Q2)
 

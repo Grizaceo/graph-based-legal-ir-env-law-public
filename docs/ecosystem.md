@@ -15,7 +15,7 @@ The LexCon Ecosystem is a decentralized set of tools designed to solve the "Trus
 - **Review Graph**: This layer maintains the "Suggested" vs "Canonical" distinction. It handles the lifecycle of knowledge (DRAFT → FROZEN → APPROVED).
 
 ### 🤖 Layer 4-5: Reasoning Intelligence
-- **LexO-Alpha**: The orchestrator agent. It decomposes legal queries into research tasks and coordinates subagents.
+- **LexO**: The orchestrator agent. It decomposes legal queries into research tasks and coordinates subagents.
 - **Subagent Fleet**: 9 specialized personas (Researcher, Procurador, Judge, Case Designer, etc.) each with its own focus and logic.
 
 ### 📱 Layer 6: End-User Applications
