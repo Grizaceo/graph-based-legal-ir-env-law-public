@@ -3,102 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexCon Legal Ecosystem | LKG Development</title>
+    <title>LexCon Ecosystem | Legal Tech Architecture</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="section hero">
-            <p class="kicker">Legal Knowledge Graph Infra</p>
+    <header class="hero-wrapper">
+        <div class="hero-container">
+            <span class="kicker">Legal Intelligence Framework</span>
             <h1>LexCon Ecosystem</h1>
-            <p class="subtitle">Infraestructura de recuperación de información jurídica y construcción de grafos canónicos bajo el estándar LexO.</p>
-            <div class="summary">
-                Este repositorio documenta un ecosistema de 7 capas diseñado para transformar datos públicos de tribunales y entidades estatales chilenas en conocimiento estructurado listo para agentes inteligentes.
+            <p class="subtitle">Estructuramos el conocimiento jurídico chileno mediante grafos de conocimiento (LKG) y agentes autónomos bajo el estándar LexO.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>⚙️ Pipeline: ¿Cómo funciona?</h2>
+            <p>A diferencia de un buscador tradicional, LexCon procesa la ley como una red de relaciones verificables. El flujo de trabajo sigue este camino crítico:</p>
+            
+            <div class="pipeline">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <b>Adquisición & Ingesta</b>
+                        <p>Los scrapers (Capa 0) monitorean PJUD y DT. Los documentos se limpian, se anonimizan y se indexan en IndexO (Capa 1).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <b>Extracción de Relaciones</b>
+                        <p>Modelos de lenguaje identifican conexiones entre normas, hechos y personas, enviando sugerencias al Review Graph (Capa 3).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <b>Validación Canónica</b>
+                        <p>Expertos humanos filtran y aprueban las relaciones (Capa 2). Solo lo validado entra al Grafo Canónico (Capa 4), asegurando Cero Alucinaciones.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <b>Razonamiento Agéntico</b>
+                        <p>LexO-Alpha (Capa 5) consulta el grafo validado para resolver consultas complejas, redactar escritos o calcular plazos procesales.</p>
+                    </div>
+                </div>
             </div>
-        </header>
+        </section>
 
         <section class="section">
-            <h2>Arquitectura del Sistema</h2>
-            <p>El ecosistema opera mediante una distribución modular de responsabilidades, desde la adquisición de datos crudos hasta la implementación de interfaces ciudadanas.</p>
-            
-            <img src="assets/architecture-overview.svg" alt="Diagrama de Arquitectura LexCon" class="diagram">
-
+            <h2>🧱 Componentes del Ecosistema</h2>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Nivel</th>
+                            <th>Capa</th>
                             <th>Módulo</th>
-                            <th>Función Crítica</th>
+                            <th>Responsabilidad</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="layer-id">Capa 0</td>
-                            <td class="layer-name">n8n-judicial</td>
-                            <td>Scraping de sentencias (PJUD, DT, SUSESO).</td>
+                            <td><span class="layer-tag">L0</span></td>
+                            <td><strong>n8n-judicial</strong></td>
+                            <td>Scraping y monitoreo de fuentes oficiales.</td>
                         </tr>
                         <tr>
-                            <td class="layer-id">Capa 1</td>
-                            <td class="layer-name">IndexO</td>
-                            <td>Retrieval semántico y embebido de documentos.</td>
+                            <td><span class="layer-tag">L1</span></td>
+                            <td><strong>IndexO</strong></td>
+                            <td>Búsqueda semántica con embeddings de 768d.</td>
                         </tr>
                         <tr>
-                            <td class="layer-id">Capa 2</td>
-                            <td class="layer-name">legal-reviewer</td>
-                            <td>Curación humana y validación de sugerencias.</td>
+                            <td><span class="layer-tag">L2/3</span></td>
+                            <td><strong>Trust Layers</strong></td>
+                            <td>Review manual y gestión de estados de verdad.</td>
                         </tr>
                         <tr>
-                            <td class="layer-id">Capa 3</td>
-                            <td class="layer-name">review-graph</td>
-                            <td>Manejo de estados y cola de revisión canónica.</td>
+                            <td><span class="layer-tag">L4</span></td>
+                            <td><strong>Canonical LKG</strong></td>
+                            <td>Base de datos de grafos con evidencia por hash.</td>
                         </tr>
                         <tr>
-                            <td class="layer-id">Capa 4</td>
-                            <td class="layer-name">LexO-Alpha</td>
-                            <td>Razonamiento jurídico y orquestación de agentes.</td>
+                            <td><span class="layer-tag">L5</span></td>
+                            <td><strong>LexO-Alpha</strong></td>
+                            <td>Orquestador de agentes y razonamiento jurídico.</td>
                         </tr>
                         <tr>
-                            <td class="layer-id">Capa 5</td>
-                            <td class="layer-name">case-writer</td>
-                            <td>Generación asistida de escritos y teoría del caso.</td>
-                        </tr>
-                        <tr>
-                            <td class="layer-id">Capa 6</td>
-                            <td class="layer-name">LexCon-hub</td>
-                            <td>Identidad, comunidad y acceso unificado.</td>
+                            <td><span class="layer-tag">L6</span></td>
+                            <td><strong>Product Hub</strong></td>
+                            <td>Aplicaciones finales (Lexito, Procurador).</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <span class="note">Estado Actual: Desarrollo Incremental</span>
         </section>
 
-        <div class="section">
-            <h2>Dominios de Aplicación</h2>
-            <p>El proyecto utiliza una estrategia de "dominio por dominio" para asegurar precisión técnica antes de la escala general:</p>
-            <ul>
-                <li><strong>Derecho Ambiental:</strong> Mapeo profundo de normas de emisiones y resoluciones de impacto ambiental (SEA).</li>
-                <li><strong>Derecho Laboral:</strong> Análisis semántico de despidos injustificados y tutela de derechos fundamentales.</li>
-                <li><strong>Asistencia Ciudadana:</strong> Destilación de conocimiento técnico para acceso a la justicia.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Documentación Técnica</h2>
-            <ul class="links">
-                <li><a href="docs/architecture.md">Especificación de la Arquitectura</a></li>
-                <li><a href="docs/ecosystem.md">Guía de las 7 Capas</a></li>
-                <li><a href="docs/domains.md">Estrategia de Dominios y Datos</a></li>
-                <li><a href="docs/roadmap.md">Roadmap de Desarrollo 2026</a></li>
-                <li><a href="docs/current-status.md">Estado de Componentes</a></li>
-            </ul>
-        </div>
-
-        <footer>
-            <div style="text-align: center; color: var(--muted); font-size: 0.85rem; padding-top: 40px; border-top: 1px solid var(--border);">
-                &copy; 2026 LexO Project &bull; Documentación Pública para Portfolio
+        <section class="section">
+            <h2>📚 Documentación</h2>
+            <div class="links">
+                <a href="docs/architecture.md">Arquitectura</a>
+                <a href="docs/ecosystem.md">Las 7 Capas</a>
+                <a href="docs/domains.md">Estrategia</a>
+                <a href="docs/roadmap.md">Roadmap</a>
             </div>
+        </section>
+
+        <footer style="text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem;">
+            &copy; 2026 LexO Project &bull; Diseñado para Portfolios Técnicos
         </footer>
     </div>
 </body>
