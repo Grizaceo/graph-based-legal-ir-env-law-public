@@ -34,16 +34,13 @@ body {
 
 /* Typography */
 h1 {
-  font-size: clamp(3rem, 8vw, 4.5rem);
-  font-weight: 510;
-  letter-spacing: -0.04em;
-  line-height: 1.0;
-  margin-bottom: 16px;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.7) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  font-size: clamp(3.5rem, 9vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: var(--text-primary); /* Pasamos a color sólido para máxima legibilidad */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 h2 {
