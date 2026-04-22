@@ -10,25 +10,40 @@
         .branding-logo {
             display: inline-flex;
             align-items: center;
-            gap: 2px;
-            font-weight: 510;
+            gap: 4px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
         .logo-svg {
             vertical-align: middle;
             margin-top: -2px;
+            filter: drop-shadow(0 0 8px rgba(94, 106, 210, 0.4));
         }
         .badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             background: rgba(94, 106, 210, 0.1);
             color: var(--accent-glow);
-            padding: 4px 12px;
+            padding: 6px 16px;
             border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 510;
-            border: 1px solid rgba(94, 106, 210, 0.2);
-            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(94, 106, 210, 0.3);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .node h3 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1.4rem;
+        }
+        .node.special h3 {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -36,11 +51,11 @@
     <div class="layout">
         <header>
             <div class="badge">
-                Lex<svg class="logo-svg" width="16" height="16" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.3"/>
-                    <circle cx="22" cy="22" r="5" fill="#5e6ad2"/>
-                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2" stroke-linecap="round"/>
-                </svg> Core Ecosystem
+                LEX<svg class="logo-svg" width="20" height="20" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.4"/>
+                    <circle cx="22" cy="22" r="6" fill="#5e6ad2"/>
+                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2.5" stroke-linecap="round"/>
+                </svg> CORE ECOSYSTEM
             </div>
             <h1>The Legal Knowledge <br>Graph for Chile.</h1>
             <p class="lead">Infraestructura agéntica diseñada para mapear la complejidad del derecho chileno mediante grafos de conocimiento validados, garantizando respuestas con trazabilidad absoluta y diseño Fail-Closed.</p>
@@ -62,12 +77,12 @@
                 <h3>03. Review</h3>
                 <p>Validación humana de relaciones en el Review Graph antes de la promoción al grafo canónico.</p>
             </div>
-            <div class="node">
+            <div class="node special">
                 <span class="node-label">OUTPUT</span>
-                <h3>04. Lex<svg class="logo-svg" width="18" height="18" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.3"/>
-                    <circle cx="22" cy="22" r="5" fill="#5e6ad2"/>
-                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2" stroke-linecap="round"/>
+                <h3>LEX<svg class="logo-svg" width="32" height="32" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
+                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
+                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
                 </svg></h3>
                 <p>Razonamiento jurídico asistido que solo opera sobre evidencia verificada por hash.</p>
             </div>

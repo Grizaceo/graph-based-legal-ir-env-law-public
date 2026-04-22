@@ -4,26 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LexCon Docs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .logo-svg {
             vertical-align: middle;
-            margin-top: -2px;
+            margin-top: -3px;
+            filter: drop-shadow(0 0 5px rgba(94, 106, 210, 0.3));
         }
         .header-mini {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 0;
-            margin-bottom: 40px;
+            padding: 32px 0;
+            margin-bottom: 48px;
             border-bottom: 1px solid var(--border-subtle);
         }
         .header-mini strong {
-            font-size: 14px;
-            color: var(--accent-glow);
-            letter-spacing: 0.1em;
+            font-size: 20px;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+            font-weight: 600;
         }
         #content {
             max-width: 800px;
@@ -49,13 +51,13 @@
     <div class="layout">
         <div class="header-mini">
             <a href="index.html" style="text-decoration: none; color: inherit;">
-                <strong>LEX<svg class="logo-svg" width="14" height="14" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.3"/>
-                    <circle cx="22" cy="22" r="5" fill="#5e6ad2"/>
-                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2" stroke-linecap="round"/>
+                <strong>LEX<svg class="logo-svg" width="22" height="22" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.4"/>
+                    <circle cx="22" cy="22" r="6" fill="#5e6ad2"/>
+                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2.5" stroke-linecap="round"/>
                 </svg> CON</strong>
             </a>
-            <a href="index.html" class="btn btn-ghost" style="font-size: 12px; padding: 6px 12px;">← Volver</a>
+            <a href="index.html" class="btn btn-ghost" style="font-size: 13px; padding: 8px 16px;">← Volver</a>
         </div>
         
         <div id="content">Cargando documentación...</div>
