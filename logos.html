@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexCon Logo Proposals</title>
+    <style>
+        body {
+            background-color: #010102;
+            color: #f7f8f8;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 24px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .logo-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .logo-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+        }
+        .logo-box {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        h3 { margin-bottom: 12px; font-weight: 510; }
+        p { font-size: 14px; color: #8a8f98; line-height: 1.5; }
+        .tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #7170ff;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-bottom: 64px; font-weight: 510; letter-spacing: -0.04em;">LexCon Visual Identity</h1>
+    
+    <div class="container">
+        <!-- Proposal A -->
+        <div class="logo-card">
+            <span class="tag">Proposed A</span>
+            <div class="logo-box">
+                <svg width="60" height="60" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="18" stroke="#5e6ad2" stroke-width="2.5"/>
+                    <path d="M20 12V20H28" stroke="#f7f8f8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3>The Monolith O</h3>
+            <p>Representa la completitud del ordenamiento con un corte de precisión agéntica interna.</p>
+        </div>
+
+        <!-- Proposal B -->
+        <div class="logo-card">
+            <span class="tag">Proposed B</span>
+            <div class="logo-box">
+                <svg width="60" height="60" viewBox="0 0 40 40">
+                    <circle cx="20" cy="10" r="3.5" fill="#5e6ad2"/>
+                    <circle cx="10" cy="30" r="3.5" fill="#f7f8f8"/>
+                    <circle cx="30" cy="30" r="3.5" fill="#f7f8f8"/>
+                    <path d="M20 13.5L11.5 27M20 13.5L28.5 27M14 30H26" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <h3>The Legal Node</h3>
+            <p>Enfoque en el Knowledge Graph (LKG). La tríada normativa: Hecho, Norma y Consecuencia.</p>
+        </div>
+
+        <!-- Proposal C -->
+        <div class="logo-card">
+            <span class="tag">Proposed C</span>
+            <div class="logo-box">
+                <svg width="60" height="60" viewBox="0 0 40 40">
+                    <rect x="12" y="8" width="2.5" height="24" fill="#5e6ad2" rx="1"/>
+                    <rect x="25.5" y="8" width="2.5" height="24" fill="#5e6ad2" rx="1"/>
+                    <rect x="8" y="18" width="24" height="2" fill="#f7f8f8" rx="1" transform="rotate(-15 20 20)"/>
+                </svg>
+            </div>
+            <h3>The Architecture</h3>
+            <p>Estructura de blueprint. Evoca la solidez de un folio legal cruzado por la agilidad moderna.</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 80px; text-align: center;">
+        <p>Archivo generado en: <code>/tmp/graph-based-legal-ir-env-law-public/logos.html</code></p>
+        <p style="margin-top: 12px;"><a href="index.html" style="color: #7170ff; text-decoration: none;">&larr; Volver a la página principal</a></p>
+    </div>
+</body>
+</html>
