@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Review workflow">
+  <rect width="1200" height="420" fill="#ffffff"/>
+  <text x="600" y="50" font-family="Arial, Helvetica, sans-serif" font-size="30" text-anchor="middle" fill="#1f2937" font-weight="700">Review Workflow</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="70" y="150" width="230" height="90" rx="8" fill="#f3f4f6" stroke="#9ca3af"/>
+    <text x="185" y="205" text-anchor="middle" fill="#1f2937" font-size="20">Candidate Extraction</text>
+
+    <rect x="350" y="150" width="230" height="90" rx="8" fill="#f3f4f6" stroke="#9ca3af"/>
+    <text x="465" y="205" text-anchor="middle" fill="#1f2937" font-size="20">Evidence Check</text>
+
+    <rect x="630" y="150" width="230" height="90" rx="8" fill="#f3f4f6" stroke="#9ca3af"/>
+    <text x="745" y="205" text-anchor="middle" fill="#1f2937" font-size="20">Human Review</text>
+
+    <rect x="910" y="150" width="230" height="90" rx="8" fill="#e5eef8" stroke="#0f4c81"/>
+    <text x="1025" y="205" text-anchor="middle" fill="#1f2937" font-size="20">Public Surface</text>
+
+    <text x="600" y="320" text-anchor="middle" fill="#4b5563" font-size="20">Fail-closed rule: insufficient evidence -> abstain or escalate to review.</text>
+  </g>
+  <g stroke="#6b7280" stroke-width="2" fill="none">
+    <path d="M300 195 H350"/>
+    <path d="M580 195 H630"/>
+    <path d="M860 195 H910"/>
+  </g>
+</svg>

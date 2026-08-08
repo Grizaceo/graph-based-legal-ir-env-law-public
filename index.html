@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexCon | Legal Knowledge Graph</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><circle cx='22' cy='22' r='18' stroke='%237170ff' stroke-width='2.5' stroke-dasharray='2 4' opacity='0.5'/><circle cx='22' cy='22' r='7' fill='%235e6ad2'/><path d='M22 17V4M22 27V40M17 22H4M27 22H40' stroke='%237170ff' stroke-width='3' stroke-linecap='round'/></svg>">
+    <style>
+        .branding-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+        .logo-svg {
+            vertical-align: middle;
+            filter: drop-shadow(0 0 10px rgba(94, 106, 210, 0.5));
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(94, 106, 210, 0.08);
+            color: var(--accent-glow);
+            padding: 16px 32px;
+            border-radius: 9999px;
+            font-size: 36px;
+            font-weight: 700;
+            border: 1px solid rgba(94, 106, 210, 0.3);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            box-shadow: 0 0 40px rgba(94, 106, 210, 0.1);
+        }
+        .badge .logo-svg {
+            width: 52px;
+            height: 52px;
+        }
+        .node h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .logo-small {
+            width: 28px;
+            height: 28px;
+            margin-top: -2px;
+            stroke-width: 3.5;
+        }
+        .node.special h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            letter-spacing: normal;
+        }
+        /* ── Language toggle ── */
+        .lang-toggle {
+            display: flex;
+            gap: 4px;
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 10;
+        }
+        .lang-toggle button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-std);
+            background: transparent;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .lang-toggle button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .lang-toggle button:not(.active):hover {
+            border-color: var(--accent);
+            color: var(--accent-glow);
+        }
+        .layout { position: relative; }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="lang-toggle">
+            <button data-lang="en" class="active" onclick="setLang('en')">EN</button>
+            <button data-lang="es" onclick="setLang('es')">ES</button>
+        </div>
+
+        <header>
+            <div class="badge">
+                LEX<svg class="logo-svg" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
+                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
+                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
+                </svg> CON
+            </div>
+            <h1><span data-i18n="hero-title">Mapping Chile's <br>Legal Complexity.</span></h1>
+            <p class="lead" data-i18n="hero-lead">Evidence-first legal IR for Chilean law: exact textual grounding, explicit review states, and fail-closed reasoning over a bounded, inspectable legal graph.</p>
+        </header>
+
+        <section class="pipeline-container">
+            <div class="node">
+                <span class="node-label">INPUT</span>
+                <h3><span data-i18n="p1-title">01. Sources</span></h3>
+                <p data-i18n="p1-desc">Ingest and normalize approved legal sources from the public ecosystem.</p>
+            </div>
+            <div class="node">
+                <span class="node-label">RETRIEVAL</span>
+                <h3><span data-i18n="p2-title">02. Index</span><svg class="logo-svg logo-small" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.4"/>
+                    <circle cx="22" cy="22" r="6" fill="#5e6ad2"/>
+                    <path d="M22 17V6M22 27V38M17 22H6M27 22H38" stroke="#7170ff" stroke-width="2.5" stroke-linecap="round"/>
+                </svg></h3>
+                <p data-i18n="p2-desc">Retrieve candidate evidence with the lowest possible ambiguity.</p>
+            </div>
+            <div class="node">
+                <span class="node-label">VERIFY</span>
+                <h3><span data-i18n="p3-title">03. Review</span></h3>
+                <p data-i18n="p3-desc">Keep ambiguous relations in human review until they can be defended with evidence.</p>
+            </div>
+            <div class="node">
+                <span class="node-label">OUTPUT</span>
+                <h3><span data-i18n="p4-title">Lex</span><svg class="logo-svg logo-small" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" opacity="0.5"/>
+                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
+                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
+                </svg></h3>
+                <p data-i18n="p4-desc">Grounded legal reasoning that abstains when the record is weak.</p>
+            </div>
+        </section>
+
+        <div class="grid">
+            <div class="box">
+                <h4 data-i18n="b1-title">Fail-Closed Logic</h4>
+                <p data-i18n="b1-desc">If there is no strong evidence in the canonical sources, the system abstains. That is a feature, not a failure.</p>
+            </div>
+            <div class="box">
+                <h4 data-i18n="b2-title">Bounded Scope</h4>
+                <p data-i18n="b2-desc">The public story is anchored in a few clear domains, not in inflated claims of universal legal coverage.</p>
+            </div>
+            <div class="box">
+                <h4 data-i18n="b3-title">Graph of Relations</h4>
+                <p data-i18n="b3-desc">The goal is not generic text search. The goal is a verifiable network of sources, relations, and review states.</p>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="demo.html" class="btn btn-primary" style="font-size: 1.05rem; padding: 16px 36px;"><span data-i18n="nav-demo">▶ Explore Public Demo</span></a>
+            <a href="graph.html" class="btn btn-ghost" style="border-color: rgba(186,104,200,0.4); color: #ce93d8;">✦ 3D Citation Graph</a>
+            <a href="docs.html?page=docs/architecture.md" class="btn btn-ghost" data-i18n="nav-arch">Technical Architecture</a>
+            <a href="docs.html?page=docs/ecosystem.md" class="btn btn-ghost" data-i18n="nav-eco">Ecosystem Map</a>
+            <a href="docs.html?page=docs/roadmap.md" class="btn btn-ghost" data-i18n="nav-road">Roadmap</a>
+            <a href="docs.html?page=docs/release-notes.md" class="btn btn-ghost" data-i18n="nav-rel">Release Notes</a>
+        </nav>
+
+        <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border-subtle); color: var(--text-tertiary); font-size: 13px;">
+            <span data-i18n="footer">LexCon Systems &bull; Evidence-first legal IR &bull; 2026</span>
+        </footer>
+    </div>
+
+<script>
+const I18N = {
+    en: {
+        'hero-title': 'Mapping Chile\'s <br>Legal Complexity.',
+        'hero-lead': 'Evidence-first legal IR for Chilean law: exact textual grounding, explicit review states, and fail-closed reasoning over a bounded, inspectable legal graph.',
+        'p1-title': '01. Sources',
+        'p1-desc': 'Ingest and normalize approved legal sources from the public ecosystem.',
+        'p2-title': '02. Index',
+        'p2-desc': 'Retrieve candidate evidence with the lowest possible ambiguity.',
+        'p3-title': '03. Review',
+        'p3-desc': 'Keep ambiguous relations in human review until they can be defended with evidence.',
+        'p4-title': 'Lex',
+        'p4-desc': 'Grounded legal reasoning that abstains when the record is weak.',
+        'b1-title': 'Fail-Closed Logic',
+        'b1-desc': 'If there is no strong evidence in the canonical sources, the system abstains. That is a feature, not a failure.',
+        'b2-title': 'Bounded Scope',
+        'b2-desc': 'The public story is anchored in a few clear domains, not in inflated claims of universal legal coverage.',
+        'b3-title': 'Graph of Relations',
+        'b3-desc': 'The goal is not generic text search. The goal is a verifiable network of sources, relations, and review states.',
+        'nav-demo': '▶ Explore Public Demo',
+        'nav-arch': 'Technical Architecture',
+        'nav-eco': 'Ecosystem Map',
+        'nav-road': 'Roadmap',
+        'nav-rel': 'Release Notes',
+        'footer': 'LexCon Systems &bull; Evidence-first legal IR &bull; 2026'
+    },
+    es: {
+        'hero-title': 'Mapeando la Complejidad<br>Legal de Chile.',
+        'hero-lead': 'IR legal basado en evidencia para el derecho chileno: fundamentación textual exacta, estados de revisión explícitos y razonamiento fail-closed sobre un grafo legal acotado e inspeccionable.',
+        'p1-title': '01. Fuentes',
+        'p1-desc': 'Ingestar y normalizar fuentes legales aprobadas del ecosistema público.',
+        'p2-title': '02. Índice',
+        'p2-desc': 'Recuperar evidencia candidata con la menor ambigüedad posible.',
+        'p3-title': '03. Revisión',
+        'p3-desc': 'Mantener relaciones ambiguas en revisión humana hasta que puedan defenderse con evidencia.',
+        'p4-title': 'Lex',
+        'p4-desc': 'Razonamiento legal fundamentado que se abstiene cuando el registro es débil.',
+        'b1-title': 'Lógica Fail-Closed',
+        'b1-desc': 'Si no hay evidencia sólida en las fuentes canónicas, el sistema se abstiene. Eso es una característica, no una falla.',
+        'b2-title': 'Alcance Acotado',
+        'b2-desc': 'La historia pública se ancla en dominios claros y acotados, no en afirmaciones infladas de cobertura legal universal.',
+        'b3-title': 'Grafo de Relaciones',
+        'b3-desc': 'La meta no es búsqueda de texto genérica. La meta es una red verificable de fuentes, relaciones y estados de revisión.',
+        'nav-demo': '▶ Explorar Demo Pública',
+        'nav-arch': 'Arquitectura Técnica',
+        'nav-eco': 'Mapa del Ecosistema',
+        'nav-road': 'Hoja de Ruta',
+        'nav-rel': 'Notas de Versión',
+        'footer': 'LexCon Systems &bull; IR legal basado en evidencia &bull; 2026'
+    }
+};
+function setLang(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang] && I18N[lang][key]) {
+            el.innerHTML = I18N[lang][key];
+        }
+    });
+    document.querySelectorAll('.lang-toggle button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('lexcon-lang', lang); } catch(e) {}
+}
+(function() {
+    const saved = localStorage.getItem('lexcon-lang');
+    if (saved === 'es') setLang('es');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexCon · Public Demo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><circle cx='22' cy='22' r='18' stroke='%237170ff' stroke-width='2.5' stroke-dasharray='2 4' opacity='0.5'/><circle cx='22' cy='22' r='7' fill='%235e6ad2'/><path d='M22 17V4M22 27V40M17 22H4M27 22H40' stroke='%237170ff' stroke-width='3' stroke-linecap='round'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        body { background: #010102; }
+
+        .demo-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 48px;
+        }
+
+        .brand-link { text-decoration: none; color: inherit; }
+        .brand-link strong {
+            font-size: 28px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-link .logo-svg-mini {
+            width: 36px; height: 36px;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 8px rgba(94, 106, 210, 0.4));
+        }
+        .back-link {
+            font-size: 14px; padding: 10px 20px;
+        }
+
+        /* ── Language toggle ── */
+        .lang-toggle {
+            display: flex;
+            gap: 4px;
+        }
+        .lang-toggle button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-std);
+            background: transparent;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .lang-toggle button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .lang-toggle button:not(.active):hover {
+            border-color: var(--accent);
+            color: var(--accent-glow);
+        }
+
+        .disclaimer-banner {
+            background: rgba(234, 179, 8, 0.06);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            padding: 16px 24px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 40px;
+            font-size: 0.88rem;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+        .disclaimer-banner .icon {
+            flex-shrink: 0;
+            width: 22px; height: 22px;
+            color: #eab308;
+            margin-top: 2px;
+        }
+        .disclaimer-banner strong { color: #eab308; }
+
+        .query-panel {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-std);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .query-panel h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .query-panel .sub {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 18px;
+        }
+
+        .query-row {
+            display: flex;
+            gap: 12px;
+        }
+        .query-row input {
+            flex: 1;
+            background: #0f1011;
+            border: 1px solid var(--border-std);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .query-row input:focus { border-color: var(--accent); }
+        .query-row input::placeholder { color: #5a5f6a; }
+        .query-row .ask-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .query-row .ask-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .query-row .ask-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+        .example-hints {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .example-hint {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-std);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .example-hint:hover { border-color: var(--accent); color: var(--accent-glow); }
+
+        #results { display: none; margin-top: 32px; }
+
+        .answer-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-std);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        .answer-card .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+        }
+        .answer-card .verdict {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .answer-card .verdict.abstain { color: #eab308; }
+        .answer-card .verdict.answer { color: #22c55e; }
+        .answer-card .explanation {
+            font-size: 0.94rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .evidence-section { margin-bottom: 24px; }
+        .evidence-section h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .evidence-card {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid var(--border-std);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        .evidence-card:hover { border-color: rgba(94, 106, 210, 0.25); }
+        .evidence-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .evidence-meta .tag {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .tag-reviewed { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .tag-unreviewed { background: rgba(234, 179, 8, 0.1); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.2); }
+        .tag-rejected { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .tag-source { background: rgba(94, 106, 210, 0.1); color: var(--accent-glow); border: 1px solid rgba(94, 106, 210, 0.2); }
+
+        .simulated-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(234,179,8,0.1);
+            color: #eab308;
+            border: 1px solid rgba(234,179,8,0.25);
+        }
+
+        .evidence-card .source-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .evidence-card .snippet {
+            font-size: 0.88rem;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+            padding: 10px 14px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+        }
+        .evidence-card .trace-link {
+            font-size: 0.78rem;
+            color: var(--accent-glow);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            opacity: 0.7;
+            transition: opacity 0.15s;
+        }
+        .evidence-card .trace-link:hover { opacity: 1; }
+
+        .trace-panel {
+            display: none;
+            margin-top: 12px;
+            padding: 14px;
+            background: rgba(0,0,0,0.15);
+            border-radius: 8px;
+            border: 1px solid var(--border-std);
+        }
+        .trace-panel.visible { display: block; }
+        .trace-panel h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .trace-panel .trace-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            padding: 4px 0;
+        }
+        .trace-panel .trace-step .arrow { color: var(--accent-glow); font-weight: 600; }
+        .trace-panel .trace-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+        .trace-dot.reviewed { background: #22c55e; }
+        .trace-dot.unreviewed { background: #eab308; }
+
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .loading-dots span {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        .demo-footer {
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-tertiary);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .query-row { flex-direction: column; }
+            .demo-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+        }
+        @media (max-width: 480px) {
+            .demo-layout { padding: 40px 16px; }
+            .disclaimer-banner { padding: 12px 16px; font-size: 0.8rem; }
+            .demo-header { padding-bottom: 24px; margin-bottom: 28px; }
+            .brand-link strong { font-size: 22px; }
+            .brand-link .logo-svg-mini { width: 28px; height: 28px; }
+            .query-panel { padding: 20px; }
+            .example-hints { max-height: 80px; overflow: hidden; }
+            .evidence-card { padding: 14px; }
+            .evidence-card .snippet { font-size: 0.72rem; padding: 8px 10px; }
+            .answer-card { padding: 18px; }
+            .answer-card .verdict { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="demo-layout">
+
+    <!-- Header -->
+    <div class="demo-header">
+        <a href="index.html" class="brand-link">
+            <strong>
+                <svg class="logo-svg-mini" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
+                    <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
+                    <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                LEXCON
+            </strong>
+        </a>
+        <div style="display:flex; gap:16px; align-items:center;">
+            <div class="lang-toggle">
+                <button data-lang="en" class="active" onclick="setLang('en')">EN</button>
+                <button data-lang="es" onclick="setLang('es')">ES</button>
+            </div>
+            <a href="index.html" class="btn btn-ghost back-link" data-i18n="back-link">← Back to site</a>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-banner">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+            <strong data-i18n="disclaimer-title">Method demo, not legal advice.</strong>
+            <span data-i18n="disclaimer-body">This demo illustrates evidence-based retrieval over Chilean labor law. Results are simulated to show system behaviour. They do not constitute legal advice. The current domain is limited to labor law (DFL 1/2002, Chilean Labor Code, jurisprudence).</span>
+        </div>
+    </div>
+
+    <!-- Query -->
+    <div class="query-panel">
+        <h2 data-i18n="query-title">Labor Query</h2>
+        <p class="sub" data-i18n="query-sub">Ask a focused question about Chilean labor law. The system will search for textual evidence in its approved sources.</p>
+
+        <div class="query-row">
+            <input type="text" id="query-input" data-i18n-placeholder="query-input-placeholder" placeholder="E.g. When does union immunity apply?" autofocus>
+            <button class="ask-btn" id="ask-btn" onclick="runQuery()" data-i18n="ask-btn">Ask →</button>
+        </div>
+
+        <div class="query-footnote" style="font-size:0.74rem; color:var(--text-tertiary); margin-top:10px; opacity:0.6;"><span data-i18n="footnote">5 queries available · domain: labor</span></div>
+
+        <div class="example-hints">
+            <span class="example-hint" onclick="fillQuery('fuero sindical')">fuero sindical</span>
+            <span class="example-hint" onclick="fillQuery('indemnización despido')">indemnización despido</span>
+            <span class="example-hint" onclick="fillQuery('subcontratación minería')">subcontratación minería</span>
+            <span class="example-hint" onclick="fillQuery('plazo demanda despido')">plazo demanda despido</span>
+            <span class="example-hint" onclick="fillQuery('modificación horario')">modificación horario</span>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div id="results">
+        <div class="answer-card" id="answer-card"></div>
+        <div class="evidence-section" id="evidence-section"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="demo-footer">
+        LexCon Systems &bull; <span data-i18n="footer-tag">Evidence-first legal IR</span> &bull; <span data-i18n="footer-method">Method demo</span> &bull; 2026
+    </div>
+</div>
+
+<script>
+// ── UI Internationalization ──
+const I18N_UI = {
+    en: {
+        'back-link': '← Back to site',
+        'disclaimer-title': 'Method demo, not legal advice.',
+        'disclaimer-body': 'This demo illustrates evidence-based retrieval over Chilean labor law. Results are simulated to show system behaviour. They do not constitute legal advice. The current domain is limited to labor law (DFL 1/2002, Chilean Labor Code, jurisprudence).',
+        'query-title': 'Labor Query',
+        'query-sub': 'Ask a focused question about Chilean labor law. The system will search for textual evidence in its approved sources.',
+        'ask-btn': 'Ask →',
+        'query-input-placeholder': 'E.g. When does union immunity apply?',
+        'footnote': '5 queries available · domain: labor',
+        'footer-tag': 'Evidence-first legal IR',
+        'footer-method': 'Method demo',
+        'loading-text': 'Searching evidence in approved sources...',
+        'verdict-label': 'VERDICT',
+        'verdict-answer': '✓ ANSWER',
+        'verdict-abstain': '⏹ ABSTAINS',
+        'evidence-heading': 'evidence(s) retrieved',
+        'no-evidence': 'No textual evidence found in approved sources. The system cannot answer with foundation.',
+        'trace-heading': 'Relation trace',
+        'trace-show': '▸ Show traceability',
+        'trace-hide': '▾ Hide traceability',
+        'summary-reviewed': 'reviewed',
+        'summary-unreviewed': 'unreviewed',
+        'source-tag': 'Source',
+        'reviewed-tag': 'Reviewed',
+        'unreviewed-tag': 'Unreviewed',
+        'rejected-tag': 'Rejected',
+        'empty-msg': 'Type a query to get started',
+        'simulated': 'SIMULATED',
+        'pending-text': '[Text pending extraction — source identified but not reviewed]',
+        'consultando': 'SEARCHING'
+    },
+    es: {
+        'back-link': '← Volver al sitio',
+        'disclaimer-title': 'Demo de método, no asesoría legal.',
+        'disclaimer-body': 'Esta demo ilustra el flujo de recuperación basada en evidencia sobre derecho laboral chileno. Los resultados son simulados para mostrar el comportamiento del sistema. No constituyen asesoría legal. El dominio actual está limitado a derecho laboral (DFL 1/2002, Código del Trabajo).',
+        'query-title': 'Consulta laboral',
+        'query-sub': 'Haz una pregunta acotada sobre derecho laboral chileno. El sistema buscará evidencia textual en sus fuentes aprobadas.',
+        'ask-btn': 'Consultar →',
+        'query-input-placeholder': 'Ej: ¿Cuándo procede el fuero sindical?',
+        'footnote': '5 consultas disponibles · dominio: laboral',
+        'footer-tag': 'IR legal basado en evidencia',
+        'footer-method': 'Demo de método',
+        'loading-text': 'Buscando evidencia en fuentes aprobadas...',
+        'verdict-label': 'VEREDICTO',
+        'verdict-answer': '✓ RESPUESTA',
+        'verdict-abstain': '⏹ SE ABSTIENE',
+        'evidence-heading': 'evidencia(s) recuperada(s)',
+        'no-evidence': 'No se encontró evidencia textual en las fuentes aprobadas. El sistema no puede responder con fundamento.',
+        'trace-heading': 'Traza de relación',
+        'trace-show': '▸ Mostrar trazabilidad',
+        'trace-hide': '▾ Ocultar trazabilidad',
+        'summary-reviewed': 'revisadas',
+        'summary-unreviewed': 'sin revisar',
+        'source-tag': 'Fuente',
+        'reviewed-tag': 'Revisado',
+        'unreviewed-tag': 'Sin revisar',
+        'rejected-tag': 'Rechazado',
+        'empty-msg': 'Escribe una consulta para comenzar',
+        'simulated': 'SIMULADO',
+        'pending-text': '[Texto pendiente de extracción — fuente identificada pero no revisada]',
+        'consultando': 'CONSULTANDO'
+    }
+};
+
+// ── Bilingual Knowledge Base ──
+const KB = [
+    {
+        keywords: ['fuero sindical', 'sindicato', 'fuero'],
+        verdict: 'answer',
+        title_en: 'Union immunity applicability',
+        title_es: 'Procedencia del fuero sindical',
+        explanation_en: 'Article 243 of the Chilean Labor Code grants union immunity (fuero sindical) to workers involved in forming a union, from 30 days before the constitutive assembly until 30 days after. Article 244 extends this protection to union officers from their election until 6 months after leaving office.',
+        explanation_es: 'El artículo 243 del Código del Trabajo establece el fuero sindical para los trabajadores que participan en la constitución de un sindicato, desde los 30 días anteriores a la asamblea constitutiva hasta 30 días después de celebrada. El artículo 244 extiende esta protección a los directores sindicales desde su elección y hasta 6 meses después de cesar en el cargo.',
+        evidence_en: [
+            { source: 'Chilean Labor Code, Art. 243', snippet: 'Workers involved in forming a union shall enjoy labor immunity from thirty days before the constitutive assembly until thirty days after it.', review: 'reviewed', trace: ['Chilean Labor Code (consolidated DFL 1/2002)', '→ Art. 243 §1', '→ Canonical review (LexO-graph edge #CT-243-A)', '→ Promoted to goldset 2025-03'] },
+            { source: 'Chilean Labor Code, Art. 244', snippet: 'Union officers [...] shall enjoy labor immunity from their election date until six months after leaving office, for the duration of their term.', review: 'reviewed', trace: ['Chilean Labor Code (consolidated DFL 1/2002)', '→ Art. 244 §1', '→ Canonical review (LexO-graph edge #CT-244-A)', '→ Promoted to goldset 2025-01'] }
+        ],
+        evidence_es: [
+            { source: 'Código del Trabajo, Art. 243', snippet: 'Los trabajadores que se encuentren en el proceso de constitución de un sindicato gozarán de fuero laboral desde los treinta días anteriores a la celebración de la asamblea constitutiva y hasta los treinta días siguientes a la misma.', review: 'reviewed', trace: ['Código del Trabajo (texto refundido DFL 1/2002)', '→ Art. 243 inc. 1°', '→ Revisión canónica (LexO-graph edge #CT-243-A)', '→ Promovido a goldset 2025-03'] },
+            { source: 'Código del Trabajo, Art. 244', snippet: 'Los directores sindicales [...] gozarán de fuero laboral desde la fecha de su elección y hasta seis meses después de haber cesado en el cargo, por el tiempo que dure su mandato.', review: 'reviewed', trace: ['Código del Trabajo (texto refundido DFL 1/2002)', '→ Art. 244 inc. 1°', '→ Revisión canónica (LexO-graph edge #CT-244-A)', '→ Promovido a goldset 2025-01'] }
+        ]
+    },
+    {
+        keywords: ['indemnización despido', 'despido injustificado', 'indemnización años', 'años servicio'],
+        verdict: 'answer',
+        title_en: 'Unfair dismissal compensation',
+        title_es: 'Indemnización por despido injustificado',
+        explanation_en: 'Article 162 of the Labor Code governs seniority compensation for dismissal without legal cause. It grants 30 days of the last monthly salary per year worked, capped at 330 days (11 years). A substitute notice payment (30 days) also applies if the employer omits notice.',
+        explanation_es: 'El artículo 162 del Código del Trabajo regula la indemnización por años de servicio en caso de despido sin causa legal. Corresponden 30 días de la última remuneración por cada año trabajado, con un tope de 330 días (11 años). Adicionalmente, procede una indemnización sustitutiva del aviso previo (30 días) si el empleador omite el aviso.',
+        evidence_en: [
+            { source: 'Chilean Labor Code, Art. 162', snippet: 'If the employer invokes one of the grounds under Article 160 and the court declares the dismissal unjustified, undue, or improper, the employer shall pay seniority compensation [...] at a rate of thirty days of the last monthly salary per year worked.', review: 'reviewed', trace: ['Chilean Labor Code (DFL 1/2002)', '→ Art. 162 §1', '→ Canonical review (LexO-graph edge #CT-162-A)'] }
+        ],
+        evidence_es: [
+            { source: 'Código del Trabajo, Art. 162', snippet: 'Si el empleador invocare una de las causales del artículo 160 y el tribunal declarare injustificado, indebido o improcedente el despido, condenará al empleador al pago de la indemnización por años de servicio [...] a razón de treinta días de la última remuneración mensual por cada año trabajado.', review: 'reviewed', trace: ['Código del Trabajo (DFL 1/2002)', '→ Art. 162 inc. 1°', '→ Revisión canónica (LexO-graph edge #CT-162-A)'] }
+        ]
+    },
+    {
+        keywords: ['subcontratación', 'mineras', 'faenas mineras', 'minería'],
+        verdict: 'abstain',
+        title_en: 'Subcontracting in mining operations — insufficient evidence',
+        title_es: 'Subcontratación en faenas mineras — evidencia insuficiente',
+        explanation_en: 'The system lacks sufficient textual evidence to answer this query. Approved sources cover the general subcontracting regime (Law 20.123), but specific sectoral rules for mining operations are still under review. An additional review sprint is needed before promoting relations in this subdomain.',
+        explanation_es: 'El sistema no cuenta con evidencia textual suficiente para responder esta consulta. Las fuentes aprobadas en el dominio laboral cubren el régimen general de subcontratación (Ley 20.123), pero las normas sectoriales específicas para faenas mineras aún están en revisión. Se requiere un sprint de revisión adicional antes de promover relaciones en este subdominio.',
+        evidence_en: [
+            { source: 'Law 20.123 (general subcontracting)', snippet: 'The law regulates work under subcontracting regimes, the operation of temporary service companies, and temporary service employment contracts.', review: 'reviewed', trace: ['Law 20.123 (consolidated text)', '→ Title I', '→ Canonical review (LexO-graph edge #L20123-T1-A)'] },
+            { source: 'Mining Safety Regulation (DS 132/2003)', snippet: null, review: 'unreviewed', trace: ['DS 132/2003 — unreviewed', '→ Relation to labor subcontracting not yet established', '→ Pending: cross-reference Law 20.123 / DS 132'] }
+        ],
+        evidence_es: [
+            { source: 'Ley 20.123 (subcontratación general)', snippet: 'La ley regula el trabajo en régimen de subcontratación, el funcionamiento de las empresas de servicios transitorios y el contrato de trabajo de servicios transitorios.', review: 'reviewed', trace: ['Ley 20.123 (texto refundido)', '→ Título I', '→ Revisión canónica (LexO-graph edge #L20123-T1-A)'] },
+            { source: 'Reglamento de seguridad minera (DS 132/2003)', snippet: null, review: 'unreviewed', trace: ['DS 132/2003 — sin revisión', '→ Relación con subcontratación laboral aún no establecida', '→ Pendiente: cruce Ley 20.123 / DS 132'] }
+        ],
+        abstention_note_en: 'Existing evidence covers general subcontracting but not its specific application to mining operations. The system abstains because the regulatory cross-reference has not been reviewed.',
+        abstention_note_es: 'La evidencia existente cubre subcontratación general pero no su aplicación específica a faenas mineras. El sistema se abstiene porque el cruce normativo no ha sido revisado.'
+    },
+    {
+        keywords: ['plazo demanda despido', 'plazo demandar', 'caducidad despido', '60 días'],
+        verdict: 'answer',
+        title_en: 'Deadline to file a dismissal lawsuit',
+        title_es: 'Plazo para demandar después del despido',
+        explanation_en: 'Article 480 of the Labor Code sets a 60 business-day deadline from the worker\'s separation to file a labor lawsuit. If the dismissal was verbal or without a documented notice letter, the count starts when the worker has reliable knowledge of the grounds invoked.',
+        explanation_es: 'El artículo 480 del Código del Trabajo establece un plazo de 60 días hábiles desde la separación del trabajador para interponer la demanda laboral. Si el despido fue verbal o sin carta de aviso documentada, el cómputo se inicia desde que el trabajador toma conocimiento fehaciente de la causal invocada.',
+        evidence_en: [
+            { source: 'Chilean Labor Code, Art. 480', snippet: 'Actions arising from rights recognized in this Code prescribe within sixty business days, counted from the date of the worker\'s separation.', review: 'reviewed', trace: ['Chilean Labor Code (DFL 1/2002)', '→ Art. 480 §1', '→ Canonical review (LexO-graph edge #CT-480-A)'] },
+            { source: 'Chilean Labor Code, Art. 480 §2', snippet: 'In the case of a verbal dismissal or one without a notice letter, the deadline shall run from when the worker has reliable knowledge of the grounds invoked.', review: 'reviewed', trace: ['Chilean Labor Code (DFL 1/2002)', '→ Art. 480 §2', '→ Canonical review (LexO-graph edge #CT-480-B)'] }
+        ],
+        evidence_es: [
+            { source: 'Código del Trabajo, Art. 480', snippet: 'Las acciones que emanan de los derechos reconocidos en este Código prescriben en el plazo de sesenta días hábiles, contados desde la fecha de la separación del trabajador.', review: 'reviewed', trace: ['Código del Trabajo (DFL 1/2002)', '→ Art. 480 inc. 1°', '→ Revisión canónica (LexO-graph edge #CT-480-A)'] },
+            { source: 'Código del Trabajo, Art. 480 inc. 2°', snippet: 'Tratándose de un despido verbal o sin carta de aviso, el plazo se contará desde que el trabajador tome conocimiento fehaciente de la causal invocada.', review: 'reviewed', trace: ['Código del Trabajo (DFL 1/2002)', '→ Art. 480 inc. 2°', '→ Revisión canónica (LexO-graph edge #CT-480-B)'] }
+        ]
+    },
+    {
+        keywords: ['modificación horario', 'horario trabajo', 'jornada', 'unilateral'],
+        verdict: 'answer',
+        title_en: 'Unilateral modification of working hours',
+        title_es: 'Modificación unilateral del horario de trabajo',
+        explanation_en: 'Article 10 of the Labor Code establishes working hours as an essential contract element. Changes require mutual agreement. Unilateral modification by the employer may constitute constructive dismissal (self-dismissal) if it substantially affects agreed-upon conditions.',
+        explanation_es: 'El artículo 10 del Código del Trabajo establece que la jornada de trabajo es un elemento esencial del contrato. Su modificación requiere acuerdo mutuo. La modificación unilateral por parte del empleador puede constituir despido indirecto (autodespido) si afecta sustancialmente las condiciones pactadas.',
+        evidence_en: [
+            { source: 'Chilean Labor Code, Art. 10', snippet: 'Working hours are an essential element of the individual employment contract. Any substantial modification of agreed conditions requires the consent of both parties.', review: 'reviewed', trace: ['Chilean Labor Code (DFL 1/2002)', '→ Art. 10', '→ Canonical review (LexO-graph edge #CT-10-A)'] },
+            { source: 'Chilean Labor Code, Art. 171 (self-dismissal)', snippet: 'If the employer introduces substantial modifications to working conditions without the worker\'s consent, the worker may self-dismiss and shall be entitled to corresponding compensation.', review: 'reviewed', trace: ['Chilean Labor Code (DFL 1/2002)', '→ Art. 171', '→ Canonical review (LexO-graph edge #CT-171-A)'] }
+        ],
+        evidence_es: [
+            { source: 'Código del Trabajo, Art. 10', snippet: 'La jornada de trabajo es uno de los elementos esenciales del contrato individual de trabajo. Toda modificación sustancial de las condiciones pactadas requiere acuerdo de ambas partes.', review: 'reviewed', trace: ['Código del Trabajo (DFL 1/2002)', '→ Art. 10', '→ Revisión canónica (LexO-graph edge #CT-10-A)'] },
+            { source: 'Código del Trabajo, Art. 171 (despido indirecto)', snippet: 'Si el empleador introduce modificaciones sustanciales en las condiciones de trabajo sin consentimiento del trabajador, éste podrá autodespedirse y tendrá derecho a las indemnizaciones correspondientes.', review: 'reviewed', trace: ['Código del Trabajo (DFL 1/2002)', '→ Art. 171', '→ Revisión canónica (LexO-graph edge #CT-171-A)'] }
+        ]
+    }
+];
+
+const FALLBACK = {
+    verdict: 'abstain',
+    title_en: 'Query outside covered domain',
+    title_es: 'Consulta fuera del dominio cubierto',
+    explanation_en: 'The system does not have sufficient textual evidence in its approved sources to answer this query. Current sources cover Chilean labor law (Labor Code, Law 20.123, associated jurisprudence) for focused questions. For other areas or very specific questions, the system abstains — this is intentional.',
+    explanation_es: 'El sistema no tiene suficiente evidencia textual en sus fuentes aprobadas para responder esta consulta. Las fuentes actuales cubren derecho laboral chileno (Código del Trabajo, Ley 20.123) en preguntas acotadas. Para otras áreas o preguntas muy específicas, el sistema se abstiene — esto es intencional.',
+    abstention_note_en: 'Question outside the scope of approved sources. See documentation on available domains.',
+    abstention_note_es: 'Pregunta fuera del alcance de las fuentes aprobadas actualmente. Consulte la documentación sobre dominios disponibles.',
+    evidence: []
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+    currentLang = lang;
+    // Update data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N_UI[lang] && I18N_UI[lang][key]) {
+            el.innerHTML = I18N_UI[lang][key];
+        }
+    });
+    // Update data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (I18N_UI[lang] && I18N_UI[lang][key]) {
+            el.placeholder = I18N_UI[lang][key];
+        }
+    });
+    // Toggle active
+    document.querySelectorAll('.lang-toggle button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+    // Re-render if results are visible
+    const results = document.getElementById('results');
+    if (results.style.display === 'block' && results.dataset.rendered) {
+        const state = JSON.parse(results.dataset.rendered);
+        renderResults(state.entry, document.getElementById(state.answerCardId), document.getElementById(state.evidenceSectionId), lang);
+    }
+    try { localStorage.setItem('lexcon-lang', lang); } catch(e) {}
+}
+
+function fillQuery(text) {
+    document.getElementById('query-input').value = text;
+    runQuery();
+}
+
+function runQuery() {
+    const input = document.getElementById('query-input');
+    const query = input.value.trim();
+    const btn = document.getElementById('ask-btn');
+    const results = document.getElementById('results');
+    const answerCard = document.getElementById('answer-card');
+    const evidenceSection = document.getElementById('evidence-section');
+
+    if (!query) {
+        results.style.display = 'block';
+        answerCard.innerHTML = '';
+        evidenceSection.innerHTML = `
+            <div style="padding: 20px; text-align: center; color: var(--text-tertiary); font-size: 0.9rem; border: 1px solid var(--border-std); border-radius: 8px; opacity: 0.7;">
+                ${I18N_UI[currentLang]['empty-msg']}
+            </div>`;
+        return;
+    }
+
+    results.style.display = 'block';
+    answerCard.innerHTML = `
+        <div class="label">${I18N_UI[currentLang]['consultando']}</div>
+        <div style="padding: 12px 0;">
+            <span style="color: var(--text-tertiary); font-size: 0.9rem;">${I18N_UI[currentLang]['loading-text']}</span>
+            <div class="loading-dots" style="margin-top: 10px;">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    evidenceSection.innerHTML = '';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        const ql = query.toLowerCase();
+        let match = null;
+        let bestScore = 0;
+        for (const entry of KB) {
+            let score = 0;
+            for (const kw of entry.keywords) {
+                if (ql.includes(kw)) score += 1;
+            }
+            if (score > bestScore) {
+                bestScore = score;
+                match = entry;
+            }
+        }
+        if (!match || bestScore < 1) {
+            const tokens = ql.split(/\s+/);
+            for (const entry of KB) {
+                let score = 0;
+                for (const t of tokens) {
+                    if (t.length < 4) continue;
+                    for (const kw of entry.keywords) {
+                        if (kw.includes(t) || t.includes(kw)) score += 0.5;
+                    }
+                }
+                if (score > bestScore) {
+                    bestScore = score;
+                    match = entry;
+                }
+            }
+        }
+        if (!match || bestScore < 0.5) {
+            match = FALLBACK;
+        }
+
+        renderResults(match, answerCard, evidenceSection, currentLang);
+        // Store state for lang-switch re-render
+        results.dataset.rendered = JSON.stringify({ entry: match, answerCardId: 'answer-card', evidenceSectionId: 'evidence-section' });
+        btn.disabled = false;
+    }, Math.max(300, 800 + Math.random() * 800));
+}
+
+function renderResults(entry, answerCard, evidenceSection, lang) {
+    const ui = I18N_UI[lang];
+    const isAbstain = entry.verdict === 'abstain';
+    const verdictClass = isAbstain ? 'abstain' : 'answer';
+    const verdictSymbol = isAbstain ? ui['verdict-abstain'] : ui['verdict-answer'];
+
+    // Pick language-dependent fields
+    const title = lang === 'es' ? (entry.title_es || entry.title_en) : (entry.title_en || entry.title_es);
+    const explanation = lang === 'es' ? (entry.explanation_es || entry.explanation_en) : (entry.explanation_en || entry.explanation_es);
+    const abstainNote = lang === 'es' ? (entry.abstention_note_es || entry.abstention_note_en || '') : (entry.abstention_note_en || entry.abstention_note_es || '');
+    const evidenceArr = lang === 'es' ? (entry.evidence_es || entry.evidence || []) : (entry.evidence_en || entry.evidence || []);
+
+    answerCard.innerHTML = `
+        <div class="label">${ui['verdict-label']}</div>
+        <div class="verdict ${verdictClass}">${verdictSymbol}</div>
+        <div class="explanation">${explanation}</div>
+        ${abstainNote ? `<div class="explanation" style="margin-top: 12px; padding: 12px; background: rgba(234,179,8,0.05); border-radius: 6px; border-left: 3px solid rgba(234,179,8,0.3);">${abstainNote}</div>` : ''}
+    `;
+
+    if (!evidenceArr || evidenceArr.length === 0) {
+        evidenceSection.innerHTML = `
+            <h3>${ui['evidence-heading'].replace(/^\d+\s*/, '0 ')}</h3>
+            <div style="padding: 20px; text-align: center; color: var(--text-tertiary); font-size: 0.9rem; border: 1px dashed var(--border-subtle); border-radius: 8px;">
+                ${ui['no-evidence']}
+            </div>
+        `;
+        return;
+    }
+
+    let html = `<h3>${evidenceArr.length} ${ui['evidence-heading']}</h3>`;
+    let idx = 0;
+
+    for (const ev of evidenceArr) {
+        const reviewClass = ev.review === 'reviewed' ? 'tag-reviewed' : ev.review === 'unreviewed' ? 'tag-unreviewed' : 'tag-rejected';
+        const reviewLabel = ev.review === 'reviewed' ? ui['reviewed-tag'] : ev.review === 'unreviewed' ? ui['unreviewed-tag'] : ui['rejected-tag'];
+        const traceId = `trace-${idx}`;
+
+        html += `
+        <div class="evidence-card">
+            <div class="evidence-meta">
+                <span class="tag tag-source">${ui['source-tag']}</span>
+                <span class="tag ${reviewClass}">${reviewLabel}</span>
+                <span class="simulated-badge">${ui['simulated']}</span>
+            </div>
+            <div class="source-name">${ev.source}</div>
+            ${ev.snippet ? `<div class="snippet">${ev.snippet}</div>` : `<div class="snippet" style="border-left-color: #eab308; font-style: italic; color: #6b7280;"><span class="simulated-badge" style="margin-right:8px;">${ui['simulated']}</span>${ui['pending-text']}</div>`}
+            ${ev.trace && ev.trace.length > 0 ? `<span class="trace-link" onclick="toggleTrace('${traceId}')">${ui['trace-show']}</span>` : ''}
+            <div class="trace-panel" id="${traceId}">
+                <h4>${ui['trace-heading']}</h4>
+                ${ev.trace.map((t, i) => {
+                    const isReviewed = t.includes('Revisión canónica') || t.includes('Canonical review') || t.includes('Promovido') || t.includes('Promoted');
+                    const isUnrev = t.includes('sin revisión') || t.includes('unreviewed') || t.includes('Pendiente') || t.includes('Pending') || t.includes('no establecida');
+                    let dotClass = 'reviewed';
+                    if (isUnrev) dotClass = 'unreviewed';
+                    else if (!isReviewed) dotClass = '';
+                    const dot = dotClass ? `<span class="trace-dot ${dotClass}"></span>` : '';
+                    const arrow = i < ev.trace.length - 1 ? `<span class="arrow">→</span>` : '';
+                    return `<div class="trace-step">${dot} ${t} ${arrow}</div>`;
+                }).join('')}
+            </div>
+        </div>`;
+        idx++;
+    }
+
+    const reviewed = evidenceArr.filter(e => e.review === 'reviewed').length;
+    const unreviewed = evidenceArr.filter(e => e.review === 'unreviewed').length;
+    html += `
+    <div style="margin-top: 16px; padding: 14px 18px; background: rgba(255,255,255,0.015); border: 1px solid var(--border-std); border-radius: 8px; font-size: 0.82rem; color: var(--text-tertiary);">
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+            <span style="background: #22c55e; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
+            ${reviewed} ${ui['summary-reviewed']}
+        </span>
+        &nbsp;&nbsp;&nbsp;
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+            <span style="background: #eab308; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
+            ${unreviewed} ${ui['summary-unreviewed']}
+        </span>
+    </div>`;
+
+    evidenceSection.innerHTML = html;
+}
+
+function toggleTrace(id) {
+    const panel = document.getElementById(id);
+    if (panel) {
+        panel.classList.toggle('visible');
+        // Update link text based on state
+        const link = panel.previousElementSibling;
+        if (link && link.classList.contains('trace-link')) {
+            const ui = I18N_UI[currentLang];
+            link.textContent = panel.classList.contains('visible') ? ui['trace-hide'] : ui['trace-show'];
+        }
+    }
+}
+
+document.getElementById('query-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') runQuery();
+});
+
+// Restore saved language
+(function() {
+    const saved = localStorage.getItem('lexcon-lang');
+    if (saved === 'es') setLang('es');
+})();
+</script>
+</body>
+</html>
