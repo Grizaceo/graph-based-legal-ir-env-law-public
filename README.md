@@ -1,4 +1,4 @@
-# Graph-Based Legal IR
+# Legal Graph Explorer
 
 Public documentation and release harness for evidence-first legal information retrieval in Chilean law.
 
