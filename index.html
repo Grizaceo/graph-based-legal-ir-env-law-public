@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexO | Legal Knowledge Graph — Chilean Law</title>
+    <title>Legal Graph Explorer — Evidence-First Legal IR for Chilean Law</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><circle cx='22' cy='22' r='18' stroke='%237170ff' stroke-width='2.5' stroke-dasharray='2 4' opacity='0.5'/><circle cx='22' cy='22' r='7' fill='%235e6ad2'/><path d='M22 17V4M22 27V40M17 22H4M27 22H40' stroke='%237170ff' stroke-width='3' stroke-linecap='round'/></svg>">
@@ -101,11 +101,12 @@
 
         <header>
             <div class="badge">
-                LEX<svg class="logo-svg" viewBox="0 0 44 44" fill="none">
+                <svg class="logo-svg" viewBox="0 0 44 44" fill="none">
                     <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 4" opacity="0.5"/>
                     <circle cx="22" cy="22" r="7" fill="#5e6ad2"/>
                     <path d="M22 17V4M22 27V40M17 22H4M27 22H40" stroke="#7170ff" stroke-width="3" stroke-linecap="round"/>
-                </svg> O
+                </svg>
+                LEGAL GRAPH EXPLORER
             </div>
             <h1><span data-i18n="hero-title">Mapping Chile's <br>Legal Complexity.</span></h1>
             <p class="lead" data-i18n="hero-lead">Evidence-first legal IR for Chilean law: exact textual grounding, explicit review states, and fail-closed reasoning over a bounded, inspectable legal graph.</p>
@@ -167,7 +168,7 @@
         </nav>
 
         <footer style="margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border-subtle); color: var(--text-tertiary); font-size: 13px;">
-            <span data-i18n="footer">LexO Systems &bull; Evidence-first legal IR for Chilean law &bull; 2026</span>
+            <span data-i18n="footer">Legal Graph Explorer &bull; Evidence-first legal IR &bull; Chilean Law</span>
         </footer>
     </div>
 
@@ -195,7 +196,7 @@ const I18N = {
         'nav-eco': 'Ecosystem Map',
         'nav-road': 'Roadmap',
         'nav-rel': 'Release Notes',
-        'footer': 'LexCon Systems &bull; Evidence-first legal IR &bull; 2026'
+        'footer': 'Legal Graph Explorer &bull; Evidence-first legal IR for Chilean law'
     },
     es: {
         'hero-title': 'Mapeando la Complejidad<br>Legal de Chile.',
@@ -206,7 +207,7 @@ const I18N = {
         'p2-desc': 'Recuperar evidencia candidata con la menor ambigüedad posible.',
         'p3-title': '03. Revisión',
         'p3-desc': 'Mantener relaciones ambiguas en revisión humana hasta que puedan defenderse con evidencia.',
-        'p4-title': 'Lex',
+        'p4-title': '04. Razonamiento',
         'p4-desc': 'Razonamiento legal fundamentado que se abstiene cuando el registro es débil.',
         'b1-title': 'Lógica Fail-Closed',
         'b1-desc': 'Si no hay evidencia sólida en las fuentes canónicas, el sistema se abstiene. Eso es una característica, no una falla.',
@@ -219,7 +220,7 @@ const I18N = {
         'nav-eco': 'Mapa del Ecosistema',
         'nav-road': 'Hoja de Ruta',
         'nav-rel': 'Notas de Versión',
-        'footer': 'LexCon Systems &bull; IR legal basado en evidencia &bull; 2026'
+        'footer': 'Legal Graph Explorer &bull; IR legal basado en evidencia &bull; Derecho Chileno'
     }
 };
 function setLang(lang) {
